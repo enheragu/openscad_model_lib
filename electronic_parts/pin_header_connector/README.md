@@ -18,9 +18,9 @@ See below list of available functions on each module.
 
  |File                             | Single                          | Array                               |
  :--------------------------------:|:--------------------------------:|:------------------------------------:
-[common_pin.scad](common_pin.scad) | Generated with `common_pin(6,0.5);`<br/> <img src="media/0_common_pin.PNG" height=200;/> |
-[female_pin.scad](female_pin.scad) | Generated with `female_pin();`<br/> <img src="media/1_female_pin.PNG" height=200;/> | Generated with `female_pin_array(5,1);`<br/> <img src="media/1_female_pin_array.PNG" height=200;/>
-[male_pin.scad](male_pin.scad) | Generated with `male_pin();`<br/> <img src="media/2_male_pin.PNG" height=200;/> | Generated with `male_pin_array(5,1);`<br/> <img src="media/2_male_pin_array.PNG" height=200;/>
+[0_common_pin.scad](0_common_pin.scad) | Generated with `common_pin(6,0.5);`<br/> <img src="media/0_common_pin.PNG" height=200;/> |
+[1_female_pin.scad](1_female_pin.scad) | Generated with `female_pin();`<br/> <img src="media/1_female_pin.PNG" height=200;/> | Generated with `female_pin_array(5,1);`<br/> <img src="media/1_female_pin_array.PNG" height=200;/>
+[2_male_pin.scad](2_male_pin.scad) | Generated with `male_pin();`<br/> <img src="media/2_male_pin.PNG" height=200;/> | Generated with `male_pin_array(5,1);`<br/> <img src="media/2_male_pin_array.PNG" height=200;/>
  
  
 
