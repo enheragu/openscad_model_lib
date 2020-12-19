@@ -1,7 +1,7 @@
 // Customizable hexagon nuts by enheragu
 // Date: 19-12-2020
 
-// metric tag name, head_diameter, nut heigth, hole_diameter
+// metric tag name, head_diameter, nut height, hole_diameter
 metrics = [
     ["M1.6", 3.41, 1.30, 1.60],
     ["M2", 4.32, 1.60, 2.00],
@@ -36,17 +36,17 @@ module hexagon_nut_negative(type, tolerance_diam = 0, tolerance_length = 0)
 {
     match = getIndex(type)[0];
     hex_diam = match[1];
-    heigth = match[2];
+    height = match[2];
     hole_diam = match[3];
 
     echo("type: ", type);
     echo("match: ", match);
     echo("hex_diam: ", hex_diam);
-    echo("heigth: ", heigth);
+    echo("height: ", height);
     echo("hole_diam: ", hole_diam);
 
     color("red")
-    cylinder(d=hex_diam+tolerance_diam, h = heigth+tolerance_length, $fn=6);
+    cylinder(d=hex_diam+tolerance_diam, h = height+tolerance_length, $fn=6);
 }
 
 
@@ -54,7 +54,7 @@ module hexagon_nut(type, tolerance = 0)
 {
     match = getIndex(type)[0];
     hex_diam = match[1];
-    heigth = match[2];
+    height = match[2];
     hole_diam = match[3];
 
     color([58/255,59/255,60/255])
@@ -64,20 +64,20 @@ module hexagon_nut(type, tolerance = 0)
         {
             hexagon_nut_negative(type);
             translate([0,0,-margin])
-            // Add extra heigth to ensure complete cutting
-            cylinder(d=hole_diam, h = heigth+2margin, $fn=fn_resolution);
+            // Add extra height to ensure complete cutting
+            cylinder(d=hole_diam, h = height+2margin, $fn=fn_resolution);
         }
         // Cilinder with chamfer to intersect with nut
         union()
         {
-            chamfer_heigth = hex_diam*0.1;
-            cylinder(h = chamfer_heigth, r1 = (hex_diam-chamfer_heigth*2)/2, r2 = hex_diam/2+margin, $fn=fn_resolution);
+            chamfer_height = hex_diam*0.1;
+            cylinder(h = chamfer_height, r1 = (hex_diam-chamfer_height*2)/2, r2 = hex_diam/2+margin, $fn=fn_resolution);
 
-            translate([0,0,heigth])
+            translate([0,0,height])
             rotate([180,0,0])
-            cylinder(h = chamfer_heigth, r1 = (hex_diam-chamfer_heigth*2)/2, r2 = hex_diam/2+margin, $fn=fn_resolution);
-            translate([0,0,chamfer_heigth-margin])
-            cylinder(h = heigth-chamfer_heigth*2+2margin, d = hex_diam+margin, $fn=fn_resolution);
+            cylinder(h = chamfer_height, r1 = (hex_diam-chamfer_height*2)/2, r2 = hex_diam/2+margin, $fn=fn_resolution);
+            translate([0,0,chamfer_height-margin])
+            cylinder(h = height-chamfer_height*2+2margin, d = hex_diam+margin, $fn=fn_resolution);
         }
     }
 }
