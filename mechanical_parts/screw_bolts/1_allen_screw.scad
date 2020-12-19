@@ -9,7 +9,7 @@ metrics = [
     ["M3", 5.50, 3.00, 3.00, 2.873],
     ["M4", 7.00, 4.00, 4.00, 3.443],
     ["M5", 8.50, 5.00, 5.00, 4.583],
-    ["M6", 1..00, 6.00, 6.0, 5.723],
+    ["M6", 10.00, 6.00, 6.0, 5.723],
     ["M8", 13.00, 8.00, 8.00, 6.863],
     ["M10", 16.00, 10.00, 10.00, 9.149],
     ["M12",18.00,12.00,12.00,11.429]
@@ -24,12 +24,15 @@ function getIndex(type) = ([for(metric = metrics) if(metric[0] == type) metric])
 function is_undef (a) = (undef == a);
 
 
-// Negative to make allen screw holes in other models
+/** Negative to make allen screw holes in other models
+ * metric_tag: string with metric tag, see metrics dict for the available ones
+ * length: length of the screw (head included)
+ * tolerance_diam: tolerance for the diameter measures (note that is applied once, if you want a radious tolerance multiply by 2)
+ * tolerance_length: tolerance for the lenght
+ */
 module allen_screw_negative(type, length, tolerance_diam = 0, tolerance_length = 0)
 {
     match = getIndex(type)[0];
-    
-    // Head
     head_diam = match[1];
     screw_diam = match[2];
     head_heigth = match[3];
@@ -58,8 +61,11 @@ module allen_screw_negative(type, length, tolerance_diam = 0, tolerance_length =
     }
 }
 
-// Nice view of allen screw model to have in assembly
-module allen_screw(type, length, tolerance = 0)
+/** Nice view of allen screw model to have in assembly
+ * metric_tag: string with metric tag, see metrics dict for the available ones
+ * length: length of the screw (head included)
+ */
+module allen_screw(type, length)
 {  
     match = getIndex(type)[0];
     head_diam = match[1];
@@ -67,8 +73,8 @@ module allen_screw(type, length, tolerance = 0)
     head_heigth = match[3];
     hex_diam = match[4];
 
-    // Lower chamfer
     color([58/255,59/255,60/255])
+    // Add Lower chamfer
     union()
     {
         difference()
@@ -76,7 +82,7 @@ module allen_screw(type, length, tolerance = 0)
             //Empty hex slot in head
             difference()
             {
-                allen_screw_negative(type, length, tolerance);
+                allen_screw_negative(type, length);
                 translate([0, 0, length+head_heigth/2])
                 cylinder(d=hex_diam, h = head_heigth, $fn=6);
             }
@@ -87,11 +93,7 @@ module allen_screw(type, length, tolerance = 0)
         chamfer_heigth = screw_diam*0.1;
         cylinder(h = chamfer_heigth, r1 = (screw_diam-chamfer_heigth*2)/2, r2 = screw_diam/2, $fn=fn_resolution);
     }
-    
 }
 
-
-
-
-allen_screw("M2", 10);
-allen_screw_negative("M2", 10, 0.2, 0.2);
+// allen_screw("M2", 10);
+// allen_screw_negative("M2", 10, 0.2, 0.2);
