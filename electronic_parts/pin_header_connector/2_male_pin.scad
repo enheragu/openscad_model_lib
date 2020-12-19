@@ -21,7 +21,7 @@ pin_lower_height = 11.34-plastic_square_side-pin_upper_height;
 module male_pin()
 {
     plastic_chanfer_size = plastic_square_side/4;
-
+    translate([plastic_square_side/2,plastic_square_side/2,0])
     union()
     {
         // Chanfer sides

@@ -18,6 +18,7 @@ metrics = [
 // These metric data has been extracted from https://www.fasteners.eu/standards/DIN/912/
 
 
+// Default resolution for shapes
 fn_resolution = 150;
 
 // Extra marging added to perform cutting and ensure complete cut
