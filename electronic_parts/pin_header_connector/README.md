@@ -1,12 +1,6 @@
-
-
-- [1. Screw and bolt generator](#1-screw-and-bolt-generator)
+- [1. Pin header Connectors](#1-pin-header-connectors)
   - [1.1. Available Modules](#11-available-modules)
-    - [1.1.1. Screw model](#111-screw-model)
-    - [1.1.2. Negative screw model](#112-negative-screw-model)
-    - [1.1.2. Hexagon Nut model](#112-hexagon-nut-model)
-    - [1.1.2. Negative Hexagon Nut model](#112-negative-hexagon-nut-model)
-    - [1.1.3. Available model and metris:](#113-available-model-and-metris)
+    - [1.1.3. Available model:](#113-available-model)
 
 # 1. Pin header Connectors
 
