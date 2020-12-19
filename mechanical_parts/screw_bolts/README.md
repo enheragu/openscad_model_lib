@@ -68,5 +68,5 @@ allen_screw_negative("M2", 10, 0.2, 0.2);
   
     ```OpenSCAD
         // allen_screw(...) and allen_screw_negative(...) functions: 
-        metrics = ["M1.6", "M2", "M2.5", "M3", "M4", "M5"];
+        metrics = ["M1.6", "M2", "M2.5", "M3", "M4", "M5", "M6", "M8", "M10", "M12"];
     ```
