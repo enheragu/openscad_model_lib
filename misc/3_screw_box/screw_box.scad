@@ -1,7 +1,7 @@
 
 /* [Design settings] */
 // Number of "fingers" in the spiral
-fingers = 1;
+fingers = 3;
 
 // Minimum wall thickness (mm)
 wall_thickness = 2;
@@ -9,6 +9,9 @@ wall_thickness = 2;
 // Percentage of inside part that is covered by each side. Nominal is printing to pieces at 48%,
 // but you can combine them as long as they sum less than 100% (leave a bit of margin :) just in case) (%)
 percentage = 48; // [5:1:95]
+
+// Inclination of the fingers, note that is a factor to control the inclination, not the exact inclination
+inclination = 5;
 
 /* [Inside Space Measures] */
 
@@ -23,7 +26,7 @@ in_height = 30;
 tolerance_mm = 0.4;
 
 // Tolerance in degrees to fit screw parts (deg)
-tolerance_deg = 5;
+tolerance_deg = 1;
 
 /* [Other] */
 // $fn resolution
@@ -59,7 +62,7 @@ module spiral_finger(hole_diameter, hole_height, wall, n_finger)
     arc2 = arcAngleInverse(diam_inner_space/2, angle, step);
     polygon_points = concat(arc1,arc2);
 
-    linear_extrude(height = hole_height, convexity = 10, twist = -hole_height*3.3, $fn = fn)
+    linear_extrude(height = hole_height, convexity = 10, twist = -hole_height*inclination, $fn = fn)
     polygon(points = polygon_points);
 }
 
@@ -100,24 +103,38 @@ module scre_box_side(in_percentage)
 }
 
 
-module scre_box_side_tagged(l, in_percentage, letter_size = 4, letter_height = 0.5, font = "Liberation Sans") {
-	// Use linear_extrude() to make the letters 3D objects as they
-	// are only 2D shapes when only using text()
-    color("black")
-    translate([0,-in_diameter*1.5,0])
-	linear_extrude(height = letter_height) {
-		text(l, size = letter_size, font = font, halign = "center", valign = "center", $fn = 16);
-	}
-    scre_box_side(in_percentage);
-}
+scre_box_side(percentage);
 
-translate([-in_diameter*3,0,0])
-scre_box_side_tagged("1 (13%)", 13);
 
-scre_box_side_tagged("2 (83%)", 83);
+// module scre_box_side_tagged(l, in_percentage, letter_size = 4, letter_height = 0.5, font = "Liberation Sans") {
+// 	// Use linear_extrude() to make the letters 3D objects as they
+// 	// are only 2D shapes when only using text()
+//     color("black")
+//     translate([0,-in_diameter*1.5,0])
+// 	linear_extrude(height = letter_height) {
+// 		text(l, size = letter_size, font = font, halign = "center", valign = "center", $fn = 16);
+// 	}
+//     scre_box_side(in_percentage);
+// }
 
-translate([in_diameter*3,0,0])
-scre_box_side_tagged("3 (48%)", 48);
 
-translate([2*in_diameter*3,0,0])
-scre_box_side_tagged("4 (48%)", 48);
+// // translate([-in_diameter*3,0,0])
+// // scre_box_side_tagged("1 (13%)", 13);
+
+// color("black",0.8)
+// translate([0,0,in_height+wall_thickness])
+// rotate([180,0, -16])
+// scre_box_side(13);
+// color("black")
+// translate([0,2*-in_diameter*1.5,0])
+// linear_extrude(height = 0.5) {
+//     text("1 (13%)", size = 4, font = "Liberation Sans", halign = "center", valign = "center", $fn = 16);
+// }
+// color("red",0.5)
+// scre_box_side_tagged("2 (83%)", 83);
+
+// translate([in_diameter*3,0,0])
+// scre_box_side_tagged("3 (48%)", 48);
+
+// translate([2*in_diameter*3,0,0])
+// scre_box_side_tagged("4 (48%)", 48);
