@@ -3,7 +3,7 @@
 
 /* [Bearing Sizes] */
 // External diameter (mm)
-external_diameter=36;
+external_diameter=40;
 
 // Internal diameter (mm)
 internal_diameter=20;
