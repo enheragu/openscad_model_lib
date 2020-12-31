@@ -1,0 +1,17 @@
+{
+    "parameterSets": {
+        "design default values": {
+            "fn": "150",
+            "handle_diam": "40",
+            "head_shape": "C",
+            "hole_height": "30",
+            "make_hole": "true",
+            "margin": "5",
+            "screw_head_diam": "5",
+            "screw_head_heigth": "2",
+            "screw_metric": "4",
+            "wall_size": "3"
+        }
+    },
+    "fileFormatVersion": "1"
+}
