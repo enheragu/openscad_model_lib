@@ -4,7 +4,7 @@
 fingers = 3;
 
 // Minimum wall thickness (mm)
-wall_thickness = 2;
+wall_thickness = 2; // 0.1
 
 // Percentage of inside part that is covered by each side. Nominal is printing to pieces at 48%,
 // but you can combine them as long as they sum less than 100% (leave a bit of margin :) just in case) (%)
@@ -16,7 +16,7 @@ inclination = 5;
 /* [Inside Space Measures] */
 
 // Diameter of the inside space (mm)
-in_diameter = 10;
+in_diameter = 10; // 0.1
 
 // Height inside the box (mm)
 in_height = 30;
@@ -26,7 +26,7 @@ in_height = 30;
 tolerance_mm = 0.4;
 
 // Tolerance in degrees to fit screw parts (deg)
-tolerance_deg = 1;
+tolerance_deg = 1; // 0.1
 
 /* [Other] */
 // $fn resolution

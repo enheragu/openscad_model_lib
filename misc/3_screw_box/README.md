@@ -12,6 +12,9 @@ In Openscad editor has the following aspect.
 
 The customizer ofers a set of options that you can play with. You will have two print two versions, check the percentaje for each of the parts.
 
+> Regarding the percentages, in the previous image pieces (1) and (2) would fit together as (3) would do with (4).
+
+
  |          Same percentage                   |             Complementary percentage              |
  :--------------------------------:|:--------------------------------:|
 <img src="./../media/3_screw_box_48-48.PNG" height=400;/> |  <img src="./../media/3_screw_box_13-83.PNG" height=400;/> |
