@@ -19,5 +19,10 @@ The customizer ofers a set of options that you can play with. You will have two 
  :--------------------------------:|:--------------------------------:|
 <img src="./../media/3_screw_box_48-48.PNG" height=400;/> |  <img src="./../media/3_screw_box_13-83.PNG" height=400;/> |
 
+I recommend printing one with most of the container and the other with little percentage as the cup, but it's up to you.
 
 Do not hesitate adapting it to your needs :)
+
+You should get something like this!
+
+<img src="./../media/3_screw_box.jpg" alt="Printed versions" width=600;/>
