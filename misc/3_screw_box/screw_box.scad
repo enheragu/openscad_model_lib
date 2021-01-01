@@ -6,6 +6,9 @@ fingers = 3;
 // Minimum wall thickness (mm)
 wall_thickness = 2; // 0.1
 
+// Extra size at the bottom. It's easyer to 'rotate' both parts if you have some extra to grab. 0 means that botom will be only wall_thickness (mm)
+extra_bottom = 0;
+
 // Percentage of inside part that is covered by each side. Nominal is printing to pieces at 48%,
 // but you can combine them as long as they sum less than 100% (leave a bit of margin :) just in case) (%)
 percentage = 48; // [5:1:95]
@@ -45,6 +48,8 @@ module inner_space(hole_diameter, hole_height, wall)
             cylinder(d = diam_inner_space-wall*2, h = hole_height, $fn = fn); // Add 0.1 to ensure cutting
         }
         cylinder(d = diam_spiral_base, h = wall_thickness, $fn = fn);
+        translate([0,0,-extra_bottom])
+        cylinder(d = diam_spiral_base, h = extra_bottom, $fn = fn);
     }
 }
 
