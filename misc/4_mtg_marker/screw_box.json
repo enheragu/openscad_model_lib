@@ -1,0 +1,51 @@
+{
+    "parameterSets": {
+        "mtg_marker_box_1": {
+            "fingers": "3",
+            "fn": "150",
+            "in_diameter": "34",
+            "in_height": "50",
+            "inclination": "5",
+            "percentage": "94",
+            "tolerance_deg": "1",
+            "tolerance_mm": "0.4",
+            "wall_thickness": "2"
+        },
+        "mtg_marker_box_2": {
+            "fingers": "3",
+            "fn": "150",
+            "in_diameter": "34",
+            "in_height": "50",
+            "inclination": "5",
+            "percentage": "5",
+            "tolerance_deg": "1",
+            "tolerance_mm": "0.4",
+            "wall_thickness": "2"
+        },
+        "mtg_small_marker_box_1": {
+            "fingers": "4",
+            "fn": "150",
+            "in_diameter": "17",
+            "in_height": "50",
+            "inclination": "5",
+            "percentage": "91",
+            "tolerance_deg": "1",
+            "tolerance_mm": "0.4",
+            "wall_thickness": "2"
+        },
+        "mtg_small_marker_box_2": {
+            "fingers": "4",
+            "fn": "150",
+            "in_diameter": "17",
+            "in_height": "50",
+            "inclination": "5",
+            "percentage": "8",
+            "tolerance_deg": "1",
+            "tolerance_mm": "0.4",
+            "wall_thickness": "2"
+        }
+    },
+    "fileFormatVersion": "1",
+    "parameterSets": "",
+    "parameterSets": ""
+}

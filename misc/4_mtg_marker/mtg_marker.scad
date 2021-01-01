@@ -2,10 +2,10 @@
 /* [Marker dimension] */
 
 // Diameter of the marker (mm)
-diameter = 15; // 0.1
+diameter = 30; // 0.1
 
 // Height of the marker (mm)
-height = 2.5; // 0.1
+height = 3; // 0.1
 
 /* [Marker design] */
 
@@ -22,7 +22,11 @@ rotation = 0;
 // Note that deformation is applied after rotation.
 deformation = 1; // 0.1
 
-text_size = 2.8;
+// Size of the text
+text_size = 5.6;
+
+// Separation between letters
+text_spacing = 0.8; // [0.5:0.01:1.5]
 
 /* [Printer settings] */
 // Printer tolerance. Printers are not perfect, pieces need a bit of margin to fit. (mm)
@@ -36,7 +40,7 @@ fn = 150;
 module marker_base(in_diameter, in_height, in_sides)
 {
     mid_height = 2*in_height/3;
-    round_corner = 0.4;
+    round_corner = 0.5;
 
     hull()
     {
@@ -68,7 +72,7 @@ module marker(in_diameter, in_height, in_sides)
     difference()
     {
         marker_base(in_diameter, in_height, in_sides);
-        translate([0,0,in_height*0.6])
+        translate([0,0,in_height*0.5])
         resize([in_diameter+tolerance,0,0], auto=true)
         marker_base(in_diameter, in_height, in_sides);
     }
@@ -77,8 +81,10 @@ module marker(in_diameter, in_height, in_sides)
 module etruded_text(l, letter_size = 4, letter_height = 0.5, font = "Courier 10 Pitch:style=Bold") {
 	// Use linear_extrude() to make the letters 3D objects as they
 	// are only 2D shapes when only using text()
+    translate([-letter_size/6,0,0])
 	linear_extrude(height = letter_height) {
-		text(l, size = letter_size, font = font, halign = "center", valign = "center", $fn = 16);
+		text(l, size = letter_size, font = font, halign = "center", valign = "center", $fn = fn,
+        spacing = text_spacing);
 	}
 }
 
