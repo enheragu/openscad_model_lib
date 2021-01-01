@@ -8,7 +8,7 @@ At first the model was intended to make some stackable counters for Magit The Ga
 
 In Openscad editor has the following aspect.
 
-<img src="./../media/4_mtg_marker_openscad.PNG" alt="View openscad" width=600;/>
+<img src="./../media/4_stackable_marker_openscad.PNG" alt="View openscad" width=600;/>
 
 The customizer ofers a set of options that you can play with. You can change the shape, text and dimensions!
 

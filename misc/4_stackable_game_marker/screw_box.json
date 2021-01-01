@@ -1,6 +1,6 @@
 {
     "parameterSets": {
-        "mtg_marker_box_1": {
+        "stackable_marker_box_1": {
             "extra_bottom": "2",
             "fingers": "3",
             "fn": "150",
@@ -12,7 +12,7 @@
             "tolerance_mm": "0.4",
             "wall_thickness": "2"
         },
-        "mtg_marker_box_2": {
+        "stackable_marker_box_2": {
             "extra_bottom": "2",
             "fingers": "3",
             "fn": "150",
@@ -24,7 +24,7 @@
             "tolerance_mm": "0.4",
             "wall_thickness": "2"
         },
-        "mtg_small_marker_box_1": {
+        "stackable_marker_small_box_1": {
             "extra_bottom": "2",
             "fingers": "4",
             "fn": "150",
@@ -36,7 +36,7 @@
             "tolerance_mm": "0.4",
             "wall_thickness": "2"
         },
-        "mtg_small_marker_box_2": {
+        "stackable_marker_small_box_2": {
             "extra_bottom": "2",
             "fingers": "4",
             "fn": "150",

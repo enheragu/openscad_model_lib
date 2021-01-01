@@ -5,7 +5,7 @@
 diameter = 30; // 0.1
 
 // Height of the marker (mm)
-height = 3; // 0.1
+height = 4; // 0.1
 
 /* [Marker design] */
 
