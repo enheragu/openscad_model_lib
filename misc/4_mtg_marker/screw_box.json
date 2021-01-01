@@ -1,6 +1,7 @@
 {
     "parameterSets": {
         "mtg_marker_box_1": {
+            "extra_bottom": "2",
             "fingers": "3",
             "fn": "150",
             "in_diameter": "34",
@@ -12,6 +13,7 @@
             "wall_thickness": "2"
         },
         "mtg_marker_box_2": {
+            "extra_bottom": "2",
             "fingers": "3",
             "fn": "150",
             "in_diameter": "34",
@@ -23,6 +25,7 @@
             "wall_thickness": "2"
         },
         "mtg_small_marker_box_1": {
+            "extra_bottom": "2",
             "fingers": "4",
             "fn": "150",
             "in_diameter": "17",
@@ -34,6 +37,7 @@
             "wall_thickness": "2"
         },
         "mtg_small_marker_box_2": {
+            "extra_bottom": "2",
             "fingers": "4",
             "fn": "150",
             "in_diameter": "17",
@@ -46,6 +50,5 @@
         }
     },
     "fileFormatVersion": "1",
-    "parameterSets": "",
     "parameterSets": ""
 }
