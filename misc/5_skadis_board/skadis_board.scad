@@ -47,4 +47,4 @@ module skadir_board()
     }
 }
 
-skadir_board();
+// skadir_board();
