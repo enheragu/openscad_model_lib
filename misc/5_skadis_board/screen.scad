@@ -71,14 +71,13 @@ module hook_array(translation = [0,0,0])
 }
 
 // Needs to add the hook for the board, thats why they are splitted here
-// Adds extra comment `make` me" for later exporting script. See Makefile to see how it works
-module screen_clip_1(translation = [0,0,0], rotation = [0,0,0]) // `make` me"
+module screen_clip_1(translation = [0,0,0], rotation = [0,0,0])
 {
     hook_array([-7,8,0]); // Translation to fit into board holes
     screen_clip(rotation = rotation);
 }
 
-module screen_clip_2(translation = [0,0,0], rotation = [0,0,0]) // `make` me"
+module screen_clip_2(translation = [0,0,0], rotation = [0,0,0])
 {
     translate(translation)
     union()
@@ -89,7 +88,7 @@ module screen_clip_2(translation = [0,0,0], rotation = [0,0,0]) // `make` me"
     }
 }
 
-module screen_clip_3(translation = [0,0,0], rotation = [0,0,0]) // `make` me"
+module screen_clip_3(translation = [0,0,0], rotation = [0,0,0])
 {
     translate(translation)
     union()
@@ -100,7 +99,7 @@ module screen_clip_3(translation = [0,0,0], rotation = [0,0,0]) // `make` me"
     }
 }
 
-module screen_clip_4(translation = [0,0,0], rotation = [0,0,0]) // `make` me"
+module screen_clip_4(translation = [0,0,0], rotation = [0,0,0])
 {
     translate(translation)
     union()
@@ -123,3 +122,16 @@ module screen_clipped()
 }
 
 // screen_clipped();
+
+
+mode = "none";
+// Exportable modules
+if (mode == "screen_clip_1") {
+    screen_clip_1();
+} else if (mode == "screen_clip_2") {
+    screen_clip_2();
+} else if (mode == "screen_clip_3") {
+    screen_clip_3();
+} else if (mode == "screen_clip_4") {
+    screen_clip_4();
+}
