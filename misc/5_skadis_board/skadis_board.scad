@@ -28,8 +28,8 @@ module hole_matrix(x_rep, y_rep, init_pose)
         // Starts in 0, reduce 1
         for(y = [0:y_rep-1])
         {
-            tranlate_x = x * (35 + hole_x);
-            tranlate_y = y * (24.8 + hole_y);
+            tranlate_x = x * (35 + board_hole_x);
+            tranlate_y = y * (24.8 + board_hole_y);
             translate([tranlate_x,tranlate_y,0])
             translate(init_pose) single_hole();
         }
