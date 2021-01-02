@@ -79,6 +79,8 @@ module screen_clip_1(translation = [0,0,0], rotation = [0,0,0])
 
 module screen_clip_2(translation = [0,0,0], rotation = [0,0,0])
 {
+    translation = [screen_x+screen_clip_wall*2,0,0];
+    rotation = [0,0,90];
     translate(translation)
     union()
     {
@@ -90,6 +92,8 @@ module screen_clip_2(translation = [0,0,0], rotation = [0,0,0])
 
 module screen_clip_3(translation = [0,0,0], rotation = [0,0,0])
 {
+    translation = [0,screen_y+screen_clip_wall*2,0];
+    rotation = [0,0,-90];
     translate(translation)
     union()
     {
@@ -101,6 +105,8 @@ module screen_clip_3(translation = [0,0,0], rotation = [0,0,0])
 
 module screen_clip_4(translation = [0,0,0], rotation = [0,0,0])
 {
+    translation = [screen_x+screen_clip_wall*2,screen_y+screen_clip_wall*2,0];
+    rotation = [0,0,180];
     translate(translation)
     union()
     {
@@ -116,9 +122,9 @@ module screen_clipped()
     screen();
 
     screen_clip_1();
-    screen_clip_2(translation = [screen_x+screen_clip_wall*2,0,0], rotation = [0,0,90]);
-    screen_clip_3(translation = [0,screen_y+screen_clip_wall*2,0], rotation = [0,0,-90]);
-    screen_clip_4(translation = [screen_x+screen_clip_wall*2,screen_y+screen_clip_wall*2,0], rotation = [0,0,180]);
+    screen_clip_2();
+    screen_clip_3();
+    screen_clip_4();
 }
 
 // screen_clipped();
