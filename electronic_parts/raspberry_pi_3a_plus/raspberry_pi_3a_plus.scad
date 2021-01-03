@@ -62,7 +62,18 @@ module broadcom_chip()
     }
 }
 
-module board()
+module sd_case()
+{
+    sd_x = 12.4;
+    sd_y = 12.9;
+    sd_width = 1.4;
+    color([196/255,202/255,206/255])
+    // center and put below board
+    translate([0,-sd_y/2,-sd_width])
+    cube([sd_x,sd_y,sd_width]);
+}
+
+module base_board()
 {
     color([106/255, 207/255, 101/255])
     difference()
@@ -85,24 +96,36 @@ module board()
             cylinder(d = hole_diameter, h = board_width+2margin, $fn = fn_resolution);
         }
     }
+}
+module board()
+{
+    union()
+    {
+        base_board();
 
-    /* Positionate and draw pin_array */
-    translate([-plastic_square_side*10,half_hdy-plastic_square_side,plastic_square_side])
-    male_pin_array(20,2);
+        /* Positionate and draw pin_array */
+        translate([-plastic_square_side*10,half_hdy-plastic_square_side,plastic_square_side])
+        male_pin_array(20,2);
 
-    /* Positionate and draw rpy_chip */
-    rpy_pos_border = 6.9;
-    hole_distance = rpy_pos_border-round_border_diam/2;
-    translate([-half_hdx+hole_distance,half_hdy-hole_distance,board_width])
-    rpy_chip();
+        /* Positionate and draw rpy_chip */
+        rpy_pos_border = 6.9;
+        hole_distance = rpy_pos_border-round_border_diam/2;
+        translate([-half_hdx+hole_distance,half_hdy-hole_distance,board_width])
+        rpy_chip();
 
-    /* Positionate and draw broadcom_chip */
-    border_distance_x = 19.4;
-    border_distance_y = 31.7;
-    bc_pos_x = -half_hdx-round_border_diam/2+border_distance_x;
-    bc_pos_y = half_hdy+round_border_diam/2-border_distance_y;
-    translate([bc_pos_x,bc_pos_y,board_width])
-    broadcom_chip();
+        /* Positionate and draw broadcom_chip */
+        border_distance_x = 19.4;
+        border_distance_y = 31.7;
+        bc_pos_x = -half_hdx-round_border_diam/2+border_distance_x;
+        bc_pos_y = half_hdy+round_border_diam/2-border_distance_y;
+        translate([bc_pos_x,bc_pos_y,board_width])
+        broadcom_chip();
+
+        /* Positionate SD thing */
+        sd_pos_x = -half_hdx-round_border_diam/2;
+        translate([sd_pos_x,0,0])
+        sd_case();
+    }
 }
 
 
@@ -112,4 +135,4 @@ module raspberry_pi_3a_plus()
     board();
 }
 
-raspberry_pi_3a_plus();
+//board();

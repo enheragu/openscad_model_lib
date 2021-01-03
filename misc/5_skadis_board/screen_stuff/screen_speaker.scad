@@ -1,5 +1,6 @@
 include <../skadis_param.scad>
 include <../skadis_simple_hook.scad>
+include <./../../../utils/filleted_rectangle.scad>
 
 speaker_body_length = 49.8;
 speaker_body_height = 15.11;
@@ -49,6 +50,7 @@ module negative_base_speaker(translation = [0,0,0])
     //color("black")
     union()
     {
+        color("black")
         resize([enlarge_speaker_length, enlarge_speaker_height, enlarge_speaker_width])
         union()
         {
@@ -59,19 +61,19 @@ module negative_base_speaker(translation = [0,0,0])
             translate([speaker_body_length+speaker_attachment_length,speaker_body_height/2-speaker_attachment_height/2,0])
             cube([speaker_attachment_length, speaker_attachment_height, speaker_body_width-speaker_attachment_width]);
 
+            // Cable output space
+            translate([speaker_body_length+speaker_attachment_length,0,0])
+            cube([speaker_attachment_length, speaker_attachment_height, speaker_body_width-speaker_attachment_width]);
+
             base_speaker(translation);
         }
 
         // Speaker hole
         diameter = 13;
         heigth = 23;
-        translate([13,speaker_height/2 - diameter/2,0])
-        translate([diameter/2, diameter/2,0])
-        hull()
-        {   
-            linear_extrude(height = speaker_width+clip_wall*2+0.2) translate([heigth-diameter,0,0]) circle(d= diameter, $fn = fn);
-            linear_extrude(height = speaker_width+clip_wall*2+0.2) translate([0,0,0]) circle(d= diameter, $fn = fn);
-        }
+        color("red")
+        translate([13,enlarge_speaker_height/2 - diameter/2,0])
+        filleted_rectangle(heigth,diameter,speaker_width+clip_wall*2+0.2,diameter/2);       
     }
 }
 
@@ -82,9 +84,9 @@ module speaker_clip()
         difference()
         {
             // Add expanded board
+            diameter = 10;
             color("white", 0.5)
-            cube([clip_length,clip_height,clip_width]);
-                        
+            filleted_rectangle(clip_length,clip_height,clip_width,diameter/2);
             
             negative_base_speaker();
         }
@@ -96,8 +98,8 @@ module speaker_clip()
     }
 }
 
-// speaker_clip();
-
+ speaker_clip();
+// negative_base_speaker();
 
 mode = "none";
 // Exportable modules

@@ -1,18 +1,13 @@
 include <skadis_param.scad>
+include <./../../utils/filleted_rectangle.scad>
 
 module board_base()
 {
-    hull()
-    {
-        linear_extrude(height = board_width) translate([board_round,board_round,0]) circle(d= 2*board_round, $fn = fn);
-        linear_extrude(height = board_width) translate([board_round,board_y-board_round,0]) circle(d= 2*board_round, $fn = fn);
-        linear_extrude(height = board_width) translate([board_x-board_round,board_round,0]) circle(d= 2*board_round, $fn = fn);
-        linear_extrude(height = board_width) translate([board_x-board_round,board_y-board_round,0]) circle(d= 2*board_round, $fn = fn);
-    }
+    filleted_rectangle(board_x,board_y,board_width,board_round);  
 }
 
 module single_hole()
-{
+{ 
     hull()
     {   
         linear_extrude(height = board_width+0.2) translate([board_hole_x/2,board_hole_y-board_hole_x/2,0]) circle(d= board_hole_x, $fn = fn);

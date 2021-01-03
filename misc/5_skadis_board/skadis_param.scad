@@ -20,7 +20,7 @@ screen_width = 6.75;
 screen_clip_size = 60;
 screen_clip_cover = 5;
 clip_wall = 3;
-clip_wall_bottom = board_width;
+clip_wall_bottom = 5;
 
 /* [Printer settings] */
 // Printer tolerance. Printers are not perfect, pieces need a bit of margin to fit. (mm)
