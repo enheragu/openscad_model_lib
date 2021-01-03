@@ -18,7 +18,7 @@ The customizer ofers a set of options that you can play with. You can change the
 Do not hesitate adapting it to your needs, try the different shapes, dimensions and text! :)
 
 ## Customization
-You can find the params I used in the `mtg_marker.json` with some of the models in the Image.
+You can find the params I used in the `stackable_game_marker.json` with some of the models in the Image.
 
 
 You can also find the parametrization I used to print `screw box` for these designs can be found in `screw_box.json`. The model is both in Thingiverse ([thing 4703135](https://www.thingiverse.com/thing:4703135)) or in this repository under [3_screw_box](/misc/3_screw_box)
