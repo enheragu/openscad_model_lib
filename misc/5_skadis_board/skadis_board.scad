@@ -36,7 +36,7 @@ module hole_matrix(x_rep, y_rep, init_pose)
     }
 }
 
-module skadir_board()
+module skadis_board()
 {
     color("#82490b")
     difference()
@@ -47,4 +47,4 @@ module skadir_board()
     }
 }
 
-// skadir_board();
+// skadis_board();

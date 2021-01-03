@@ -1,10 +1,10 @@
 
 
 include <skadis_board.scad>
-include <screen.scad>
+include <screen_stuff/screen.scad>
 
 
-skadir_board();
+skadis_board();
 
 translate([37,94,board_width])
 screen_clipped();

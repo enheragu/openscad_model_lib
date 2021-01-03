@@ -1,5 +1,5 @@
-include <skadis_param.scad>
-include <skadis_simple_hook.scad>
+include <../skadis_param.scad>
+include <../skadis_simple_hook.scad>
 
 keypad_length = 15.2;
 keypad_height = 107.9;
@@ -17,6 +17,10 @@ button_feet_width = 1.8;
 cable_connection_length = 13.15;
 cable_connection_height = 5.93;
 cable_connection_width = 3.7;
+
+clip_length = keypad_length + tolerance*2 + clip_wall + clip_wall_bottom;
+clip_height = keypad_height - cable_connection_height + tolerance + clip_wall;
+clip_width = keypad_width + tolerance*2 + clip_wall;
 
 module button(translation = [0,0,0])
 {
@@ -69,15 +73,12 @@ module clip()
         difference()
         {
             // Add expanded board
-            clip_length = keypad_length + tolerance*2 + clip_wall + clip_wall_bottom;
-            clip_height = keypad_height - cable_connection_height + tolerance + clip_wall;
-            clip_width = keypad_width + tolerance*2 + clip_wall;
             color("white", 0.5)
             cube([clip_length,clip_height,clip_width]);
             
-            enlarge_board_length = keypad_length + tolerance;
-            enlarge_board_height = keypad_height + tolerance;
-            enlarge_board_width = keypad_width + button_height + button_cylinder_height + tolerance + 0.1; // Ensure cut through
+            enlarge_board_length = keypad_length + tolerance * 2; // adds tolerance at both sides
+            enlarge_board_height = keypad_height + tolerance * 2; // adds tolerance at both sides
+            enlarge_board_width = keypad_width + button_height + button_cylinder_height + tolerance + 0.1; // Ensure cut through. Adds tolerance only in one of the sides, the other is oppened
             resize([enlarge_board_length, enlarge_board_height, enlarge_board_width])
             board([clip_length/2-enlarge_board_length/2, clip_wall, -0.1]);
         }
@@ -86,6 +87,12 @@ module clip()
         rotate([-90,0,0])
         simple_hook_array(1,2);
     }
+}
+
+module screen_button_clipped()
+{
+    clip();
+    board([clip_length/2-keypad_length/2, clip_wall, 0]);
 }
 
 

@@ -62,4 +62,4 @@ module simple_hook_array(row = 1, column = 1)
     }
 }
 
-// simple_hook();
+// simple_hook_array(2,2);

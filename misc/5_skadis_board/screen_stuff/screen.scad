@@ -1,5 +1,5 @@
-include <skadis_param.scad>
-include <skadis_simple_hook.scad>
+include <../skadis_param.scad>
+include <../skadis_simple_hook.scad>
 
 
 screen_clip_width = screen_width+tolerance*2+clip_wall*2;
