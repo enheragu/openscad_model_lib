@@ -61,11 +61,11 @@ module rpy_clip()
 
         // Remove extra surface to fit components
         cut_size_y = size_y-fillet_rad*3.6;
-        translate([-0.1,size_y/2-cut_size_y/2,clip_wall_bottom-2])
+        translate([-0.1,size_y/2-cut_size_y/2,clip_wall_bottom-2.5])
         cube([size_x+0.2, cut_size_y,clip_wall_bottom]);
         
         cut_size_x = size_x-fillet_rad*3.6;
-        translate([size_x/2-cut_size_x/2,-0.1,clip_wall_bottom-2])
+        translate([size_x/2-cut_size_x/2,-0.1,clip_wall_bottom-2.5])
         cube([cut_size_x, size_y+0.2,clip_wall_bottom]);
     }
 }
@@ -77,7 +77,8 @@ module assembly_rpy_clip()
     translate([fillet_rad/4,fillet_rad/4,clip_wall_bottom])
     raspberry_pi_3a_plus();
 }
-rpy_clip();
+
+// rpy_clip();
 
 mode = "none";
 // Exportable modules

@@ -98,7 +98,7 @@ module screen_button_clipped()
     board([clip_length/2-keypad_length/2, clip_wall, 0]);
 }
 
- screen_button_clipped();
+// screen_button_clipped();
 
 mode = "none";
 // Exportable modules
