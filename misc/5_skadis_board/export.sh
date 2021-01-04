@@ -26,3 +26,6 @@ echo "Export raspberry py 3A+ Clip"
 openscad -D"mode=\"rpy_clip\"" -o stl_output/rpy3aplus_clip.stl skadis_rpy3aplus_clip.scad
 
 
+echo "Export power strp Clips"
+openscad -D"mode=\"clip_1\"" -o stl_output/power_strip_clip_1.stl power_strip_clip.scad
+openscad -D"mode=\"clip_2\"" -o stl_output/power_strip_clip_1.stl power_strip_clip.scad

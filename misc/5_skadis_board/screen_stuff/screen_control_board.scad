@@ -8,7 +8,7 @@ holes = [[7.4,12.5],
          [7.4,117.44],
          [35.4,123]];
 
-hole_diameter = 3.5;
+screen_board_hole_diameter = 3.5;
 external_diameter = 17;
 
 module base_hole_shape()
@@ -41,7 +41,7 @@ module screen_board_clip()
 
                 for(position = holes)
                 {
-                    translate(position) cylinder(d = hole_diameter+2, h = clip_wall_bottom+2, $fn = fn);
+                    translate(position) cylinder(d = screen_board_hole_diameter+2, h = clip_wall_bottom+2, $fn = fn);
                 }
             }
 
@@ -49,7 +49,7 @@ module screen_board_clip()
             {
                 for(position = holes)
                 {
-                    strip_hole(translation = position, strip_head_size = [5,5,4.12], diameter = hole_diameter, height = clip_wall_bottom+2 + 0.1);
+                    strip_hole(translation = position, strip_head_size = [5,5,4.12], diameter = screen_board_hole_diameter, height = clip_wall_bottom+2 + 0.1);
                 }
             }
             translate([6,15,-0.1])

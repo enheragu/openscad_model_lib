@@ -79,7 +79,7 @@ module assembly_rpy_clip()
     raspberry_pi_3a_plus();
 }
 
- rpy_clip();
+//  rpy_clip();
 
 mode = "none";
 // Exportable modules
