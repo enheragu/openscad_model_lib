@@ -11,21 +11,21 @@ margin = 0.1;
 // Default resolution for shapes
 fn_resolution = 150;
 
-board_width = 1.6;
+rpy_board_width = 1.6;
 
-hole_distance_x = 58;
-hole_distance_y = 49;
-half_hdx = hole_distance_x/2;
-half_hdy = hole_distance_y/2;
-hole_diameter = 2.7;
+rpy_hole_distance_x = 58;
+rpy_hole_distance_y = 49;
+rpy_half_hdx = rpy_hole_distance_x/2;
+rpy_half_hdy = rpy_hole_distance_y/2;
+rpy_hole_diameter = 2.7;
 round_border_diam = 7;
 
 // Function to get hole positions for screws
 function get_hole_positions() = [
-    [-half_hdx,-half_hdy,0],
-    [-half_hdx,half_hdy,0],
-    [half_hdx,half_hdy,0],
-    [half_hdx,-half_hdy,0]
+    [-rpy_half_hdx,-rpy_half_hdy,0],
+    [-rpy_half_hdx,rpy_half_hdy,0],
+    [rpy_half_hdx,rpy_half_hdy,0],
+    [rpy_half_hdx,-rpy_half_hdy,0]
     ];
 
 
@@ -84,7 +84,7 @@ module base_board()
             for(position = get_hole_positions())
             {
                 translate(position)
-                cylinder(d = round_border_diam, h = board_width, $fn = fn_resolution);
+                cylinder(d = round_border_diam, h = rpy_board_width, $fn = fn_resolution);
             }
         }
 
@@ -93,7 +93,7 @@ module base_board()
         {
             translate(position)
             translate([0,0,-margin])
-            cylinder(d = hole_diameter, h = board_width+2margin, $fn = fn_resolution);
+            cylinder(d = rpy_hole_diameter, h = rpy_board_width+2margin, $fn = fn_resolution);
         }
     }
 }
@@ -104,25 +104,25 @@ module board()
         base_board();
 
         /* Positionate and draw pin_array */
-        translate([-plastic_square_side*10,half_hdy-plastic_square_side,plastic_square_side])
+        translate([-plastic_square_side*10,rpy_half_hdy-plastic_square_side,plastic_square_side])
         male_pin_array(20,2);
 
         /* Positionate and draw rpy_chip */
         rpy_pos_border = 6.9;
-        hole_distance = rpy_pos_border-round_border_diam/2;
-        translate([-half_hdx+hole_distance,half_hdy-hole_distance,board_width])
+        rpy_hole_distance = rpy_pos_border-round_border_diam/2;
+        translate([-rpy_half_hdx+rpy_hole_distance,rpy_half_hdy-rpy_hole_distance,rpy_board_width])
         rpy_chip();
 
         /* Positionate and draw broadcom_chip */
         border_distance_x = 19.4;
         border_distance_y = 31.7;
-        bc_pos_x = -half_hdx-round_border_diam/2+border_distance_x;
-        bc_pos_y = half_hdy+round_border_diam/2-border_distance_y;
-        translate([bc_pos_x,bc_pos_y,board_width])
+        bc_pos_x = -rpy_half_hdx-round_border_diam/2+border_distance_x;
+        bc_pos_y = rpy_half_hdy+round_border_diam/2-border_distance_y;
+        translate([bc_pos_x,bc_pos_y,rpy_board_width])
         broadcom_chip();
 
         /* Positionate SD thing */
-        sd_pos_x = -half_hdx-round_border_diam/2;
+        sd_pos_x = -rpy_half_hdx-round_border_diam/2;
         translate([sd_pos_x,0,0])
         sd_case();
     }
@@ -131,7 +131,7 @@ module board()
 
 module raspberry_pi_3a_plus()
 {
-    translate([half_hdx+round_border_diam/2,half_hdy+round_border_diam/2,0])
+    translate([rpy_half_hdx+round_border_diam/2,rpy_half_hdy+round_border_diam/2,0])
     board();
 }
 

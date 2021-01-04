@@ -3,13 +3,13 @@ include <skadis_board.scad>
 
 
 
-side = board_hole_x-tolerance*2;
+hook_side = board_hole_x-tolerance*2;
 hook_back_height = board_hole_y*0.95-tolerance;
-hook_inside_width = board_width + tolerance * 2;
+hook_inside_width = skadis_board_width + tolerance * 2;
 
-hook_heiht = hook_back_height + side;
-hook_width = hook_inside_width + side*2;
-hook_length = side;
+hook_heiht = hook_back_height + hook_side;
+hook_width = hook_inside_width + hook_side*2;
+hook_length = hook_side;
 
 module simple_hook()
 {
@@ -17,28 +17,28 @@ module simple_hook()
     // Intersection with hole to leave rounded shape
     intersection()
     {
-        translate([0,hook_inside_width + side,0])
+        translate([0,hook_inside_width + hook_side,0])
         union()
         {
-            // translate([0,-hook_inside_width - side, 0 - side])
-            // cube([side,side,hook_back_height-side]);
+            // translate([0,-hook_inside_width - hook_side, 0 - hook_side])
+            // cube([hook_side,hook_side,hook_back_height-hook_side]);
 
-            translate([side,-hook_inside_width, hook_back_height-side])
+            translate([hook_side,-hook_inside_width, hook_back_height-hook_side])
             rotate([90,0,-90])
             rotate_extrude(angle=90, convexity=10)
-            square(size = side);
+            square(size = hook_side);
 
-            translate([0,-hook_inside_width,hook_back_height-side])
-            cube([side,hook_inside_width,side]);
+            translate([0,-hook_inside_width,hook_back_height-hook_side])
+            cube([hook_side,hook_inside_width,hook_side]);
 
-            translate([0,0,hook_back_height - side])
+            translate([0,0,hook_back_height - hook_side])
             rotate([90,0,90])
             rotate_extrude(angle=90, convexity=10)
-            square(size = side);
+            square(size = hook_side);
 
-            cube([side,side,hook_back_height-side]);
+            cube([hook_side,hook_side,hook_back_height-hook_side]);
         }
-        translate([-board_hole_x+side+tolerance,hook_width+0.1,0])
+        translate([-board_hole_x+hook_side+tolerance,hook_width+0.1,0])
         scale([1,10,0.95])
         rotate([90,0,0])
         single_hole();

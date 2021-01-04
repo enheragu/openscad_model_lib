@@ -35,7 +35,7 @@ module screen_board_clip()
                 // Holes for strips
 
                 // Hooks
-                translate([-0.5,100,side])
+                translate([-0.5,100,hook_side])
                 rotate([-90,0,0])
                 simple_hook_array(2,3);
 

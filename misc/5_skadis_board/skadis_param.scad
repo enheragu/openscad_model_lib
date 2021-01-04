@@ -3,7 +3,7 @@
 
 board_x = 760;
 board_y = 560;
-board_width = 5;
+skadis_board_width = 5;
 
 // radius
 board_round = 25;

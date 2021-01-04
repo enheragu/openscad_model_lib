@@ -25,8 +25,8 @@ module rpy_clip()
 {
     // hole_diameter
     fillet_rad = 10/2;
-    size_x = hole_distance_x+fillet_rad*2;
-    size_y = hole_distance_y+fillet_rad*2;
+    size_x = rpy_hole_distance_x+fillet_rad*2;
+    size_y = rpy_hole_distance_y+fillet_rad*2;
     difference()
     {
         union()
@@ -40,13 +40,14 @@ module rpy_clip()
                 for(position = get_hole_positions())
                 {
                     // Positions are centered, de-center them
-                    strip_hole(translation = position, strip_head_size = [5,5,4.12], diameter = hole_diameter, height = clip_wall_bottom + 0.1);
+                    strip_hole(translation = position, strip_head_size = [5,5,4.12], diameter = rpy_hole_diameter, height = clip_wall_bottom + 0.1);
                 }
             }
 
             // Hooks
-            translate([12,40,side])
+            translate([12,40,0])
             rotate([-90,0,0])
+            translate([0,-hook_side,0])
             simple_hook_array(2,2);
         }
 
@@ -78,7 +79,7 @@ module assembly_rpy_clip()
     raspberry_pi_3a_plus();
 }
 
-// rpy_clip();
+ rpy_clip();
 
 mode = "none";
 // Exportable modules

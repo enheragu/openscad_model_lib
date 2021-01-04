@@ -86,7 +86,7 @@ module clip()
             board([clip_length/2-enlarge_board_length/2, clip_wall, -0.1]);
         }
         
-        translate([tolerance/2,70,side])
+        translate([tolerance/2,70,hook_side])
         rotate([-90,0,0])
         simple_hook_array(1,2);
     }

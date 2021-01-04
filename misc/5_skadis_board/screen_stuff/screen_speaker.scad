@@ -91,7 +91,7 @@ module speaker_clip()
             negative_base_speaker();
         }
         
-        translate([25,tolerance/2,side])
+        translate([25,tolerance/2,hook_side])
         rotate([0,0,90])
         rotate([-90,0,0])
         simple_hook_array(1,2);
