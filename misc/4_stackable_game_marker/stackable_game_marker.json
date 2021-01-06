@@ -1,0 +1,64 @@
+{
+    "parameterSets": {
+        "-1\/-1": {
+            "deformation": "1",
+            "diameter": "32",
+            "fn": "150",
+            "height": "4",
+            "rotation": "0",
+            "sides": "10",
+            "text": "-1\/-1",
+            "text_size": "7.3",
+            "tolerance": "0.4"
+        },
+        "+1\/+1": {
+            "deformation": "1",
+            "diameter": "32",
+            "fn": "150",
+            "height": "4",
+            "rotation": "0",
+            "sides": "10",
+            "text": "+1\/+1",
+            "text_size": "7.3",
+            "tolerance": "0.4"
+        },
+        "+1": {
+            "deformation": "1",
+            "diameter": "16",
+            "fn": "150",
+            "height": "4",
+            "rotation": "0",
+            "sides": "150",
+            "text": "+1",
+            "text_size": "8.5",
+            "text_spacing": "0.75",
+            "tolerance": "0.4"
+        },
+        "-1": {
+            "deformation": "1",
+            "diameter": "16",
+            "fn": "150",
+            "height": "4",
+            "rotation": "0",
+            "sides": "150",
+            "text": "-1",
+            "text_size": "8.5",
+            "text_spacing": "0.75",
+            "tolerance": "0.4"
+        },
+        "flying": {
+            "deformation": "2.4",
+            "diameter": "20.3",
+            "fn": "150",
+            "height": "4",
+            "rotation": "45",
+            "sides": "4",
+            "text": "flying",
+            "text_size": "5.6",
+            "text_spacing": "0.97",
+            "tolerance": "0.4"
+        }
+    },
+    "fileFormatVersion": "1",
+    "parameterSets": ""
+}
