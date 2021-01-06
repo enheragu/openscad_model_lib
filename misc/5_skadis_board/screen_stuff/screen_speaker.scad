@@ -64,7 +64,7 @@ module negative_base_speaker(translation = [0,0,0])
             // Cable output space
             translate([speaker_body_length+speaker_attachment_length,0,0])
             cube([speaker_attachment_length, speaker_attachment_height, speaker_body_width-speaker_attachment_width]);
-
+            
             base_speaker(translation);
         }
 
@@ -74,6 +74,11 @@ module negative_base_speaker(translation = [0,0,0])
         color("red")
         translate([13,enlarge_speaker_height/2 - diameter/2,0])
         filleted_rectangle(heigth,diameter,speaker_width+clip_wall*2+0.2,diameter/2);       
+        
+        cable_diam=4;
+        translate([speaker_body_length+speaker_attachment_length*2,cable_diam/2,0])
+        rotate([0,90,0])
+        cylinder(d = cable_diam, h = speaker_attachment_length+clip_wall_bottom+tolerance, $fn = fn);
     }
 }
 
@@ -91,14 +96,15 @@ module speaker_clip()
             negative_base_speaker();
         }
         
-        translate([25,tolerance/2,hook_side])
-        rotate([0,0,90])
+
+        translate([48,hook_side+ tolerance,hook_side])
+        rotate([0,0,-90])
         rotate([-90,0,0])
         simple_hook_array(1,2);
     }
 }
 
- speaker_clip();
+//  speaker_clip();
 // negative_base_speaker();
 
 mode = "none";

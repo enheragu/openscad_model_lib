@@ -58,7 +58,7 @@ module power_strip_negative()
         }
 
         // Switch
-        n_switch_x = 34 + tolerance*2;
+        n_switch_x = 45 + tolerance*2;
         n_switch_y = 34 + tolerance*2;
         n_switch_z = clip_wall_bottom + tolerance;
         translate([n_power_strip_length-23-n_switch_x, n_power_strip_heigth/2 - n_switch_y/2, n_power_strip_width - 2])
@@ -90,7 +90,7 @@ module clip_1()
     }
 
     color("red")
-    translate([216,42,hook_side])
+    translate([16,42,hook_side])
     rotate([-90,0,0])
     simple_hook_array(2,2);
 }
@@ -125,7 +125,7 @@ module clip_2()
     }
     
     color("red")
-    translate([16,42,hook_side])
+    translate([216,42,hook_side])
     rotate([-90,0,0])
     simple_hook_array(2,2);
 }
@@ -144,7 +144,7 @@ module assembly_power_strip_clip()
     simple_hook_array(10,2);
 }
 
-//  assembly_power_strip_clip();
+// assembly_power_strip_clip();
 
 
 mode = "none";
