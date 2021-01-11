@@ -132,8 +132,8 @@ module clip_2()
 
 module assembly_power_strip_clip()
 {
-    // translate([clip_wall+tolerance,clip_wall+tolerance,clip_wall_bottom+tolerance])
-    // power_strip();
+     translate([clip_wall+tolerance,clip_wall+tolerance,clip_wall_bottom+tolerance])
+     power_strip();
     clip_1();
     clip_2();
 
