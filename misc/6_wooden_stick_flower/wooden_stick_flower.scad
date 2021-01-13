@@ -51,7 +51,7 @@ module pot()
             translation_x = d2/2-sq_size_x*relation_x;
             translation_z = h-sq_size_z*relation_z;
             translate([0,0,translation_z])
-            rotate_extrude(angle = 360, convexity = 2)
+            rotate_extrude(angle = 360, convexity = 2, $fn = fn)
             translate([translation_x,0,0])
             square(size = [sq_size_x, sq_size_z]); 
         }
