@@ -7,9 +7,39 @@ mode = "Assembly"; // [Assembly, Pot, Leaf, Flower]
 // Diameter of the wooden stick to use. Note that the hole model depends on this measure :) (mm)
 wooden_stick_diam = 2.8;
 
+// The step between one point to the next in the bezier curve computation
 bezier_step = 0.03;
 
+// Minimum wall width
 wall_width = 1;
+
+
+/* [Flower settings] */
+// The heigth of the flower (mm)
+flower_heigth = 35;
+
+// The diameter of the upper hole, the "mouth" (mm)
+flower_mouth_width = 14;
+
+// The max diameter inside the flower (the "belly") (mm)
+curvature_control_width = 25;
+
+// Heigth in which this max curvature is placed (mm)
+curvature_control_heigth = 10;
+
+
+/* [Pot settings] */
+// Default related to wooden stick diam when is [0,0]. If set means X and Y of the square border before extrusion (mm)
+square_border = [0,0];
+
+// Default related to wooden stick diam when is 0. (mm)
+upper_diameter = 0;
+
+// Default related to wooden stick diam when is 0. (mm)
+lower_diameter = 0;
+
+// Default related to wooden stick diam when is 0. (mm)
+pot_height = 0;
 
 /* [Printer settings] */
 // Printer tolerance. Printers are not perfect, pieces need a bit of margin to fit. Note that some 
@@ -39,15 +69,16 @@ module pot()
 {
     difference()
     {
-        d1 = wooden_stick_diam*9;
-        d2 = wooden_stick_diam*14;
-        h = wooden_stick_diam*12;
+        d1 = (upper_diameter == 0) ? wooden_stick_diam*9 : upper_diameter;
+        d2 = (lower_diameter == 0) ? wooden_stick_diam*14 : lower_diameter;
+        h = (pot_height == 0) ? wooden_stick_diam*12 : pot_height;
         union()
         {
             cylinder(d1= d1, d2 = d2, h = h, $fn = fn);
 
-            sq_size_x = wooden_stick_diam*2;
-            sq_size_z = wooden_stick_diam*3;
+            sq_size_x = (square_border.x != 0) ?  square_border.x : wooden_stick_diam*2;
+            sq_size_z = (square_border.x != 0) ? square_border.y : wooden_stick_diam*3;
+
             relation_x = 0.6;
             relation_z = 0.6;
             translation_x = d2/2-sq_size_x*relation_x;
@@ -58,8 +89,8 @@ module pot()
             square(size = [sq_size_x, sq_size_z]); 
         }
         // Stick hole
-        translate([0,0,2*h/3+0.1])
-        cylinder(d = wooden_stick_diam+tolerance, h = h/2, $fn = fn);
+        translate([0,0,wall_width*2])
+        cylinder(d = wooden_stick_diam+tolerance, h = h, $fn = fn);
     }
 }
 
@@ -111,8 +142,9 @@ module flower(translation = [0,0,0])
 {
     // For a rotate extrude its better if all points are in the same cuadrant (X and Y > 0)
     p1 = [wall_width,wall_width];
-    p2 = [7,35];
-    pC = [20,2];
+    p2 = [flower_mouth_width/2,flower_heigth];
+    pC = [(curvature_control_width/2)*2 - (p1.x + p2.x)/2 , curvature_control_heigth*2 - (p1.y + p2.y)/2];
+    //pC = [curvature_control_width,curvature_control_heigth];
 
     points = quadraticBezierCurve2D(p1, pC, p2);
     points1 = quadraticBezierCurve2D(p1, [-pC.x,pC.y], [-p2.x,p2.y]);
