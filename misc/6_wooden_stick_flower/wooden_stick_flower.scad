@@ -1,11 +1,13 @@
 
 
+/* [Export settings] */
+mode = "Assembly"; // [Assembly, Pot, Leaf, Flower]
 
 /* [Model settings] */
 // Diameter of the wooden stick to use. Note that the hole model depends on this measure :) (mm)
 wooden_stick_diam = 2.8;
 
-bezier_step = 0.02;
+bezier_step = 0.03;
 
 wall_width = 1;
 
@@ -16,7 +18,7 @@ tolerance = 0.4;
 
 /* [Other] */
 // $fn resolution
-fn = 150;
+fn = 120;
 
 
 // Quadratic Bezier curve (take advantage of dot notation index for 2d points :) )
@@ -37,9 +39,9 @@ module pot()
 {
     difference()
     {
-        d1 = wooden_stick_diam*10;
-        d2 = wooden_stick_diam*17;
-        h = wooden_stick_diam*13;
+        d1 = wooden_stick_diam*9;
+        d2 = wooden_stick_diam*14;
+        h = wooden_stick_diam*12;
         union()
         {
             cylinder(d1= d1, d2 = d2, h = h, $fn = fn);
@@ -89,45 +91,53 @@ module leaf(translation = [0,0,0])
     }
 }
 
+module 2dline(points, point_diam)
+{
+    union()
+    {
+        for (index=[0:len(points)-2])
+        {
+            hull()
+            {
+                translate(points[index]) circle(point_diam, $fn = fn);
+                translate(points[index+1]) circle(point_diam, $fn = fn);
+            }
+        }
+    }
+}
 
 // Flower
 module flower(translation = [0,0,0])
 {
-    p1 = [1,0];
+    // For a rotate extrude its better if all points are in the same cuadrant (X and Y > 0)
+    p1 = [wall_width,wall_width];
     p2 = [7,35];
     pC = [20,2];
 
     points = quadraticBezierCurve2D(p1, pC, p2);
+    points1 = quadraticBezierCurve2D(p1, [-pC.x,pC.y], [-p2.x,p2.y]);
 
     translate(translation)
     difference()
     {
         union()
         {
-            rotate_extrude(angle = 360, convexity = 2, $fn = fn)
-            union()
-            {
-                for (index=[0:len(points)-2])
-                {
-                    hull()
-                    {
-                        translate(points[index]) circle(wall_width);
-                        translate(points[index+1]) circle(wall_width);
-                    }
-                }
-            }
-
+            // For some reason 360 fails -.- Make two partial instead
+            rotate_extrude(angle = 270, convexity = 10, $fn = fn)
+            2dline(points,wall_width);
+            
+            rotate([0,0,180])
+            rotate_extrude(angle = 270, convexity = 10, $fn = fn)
+            2dline(points,wall_width);
 
             // Make some structure for the stick :)
-            translate([0,0,1]) cylinder(d = wooden_stick_diam+wall_width*2, h = wooden_stick_diam*3+wall_width, $fn = fn);
-
+            diam = pC.x*2/3;
+            translate([0,0,diam/2]) sphere(d = diam, $fn = fn);
         }
         // Hole for the stick
         h = wall_width*5;
-        translate([0,0,1-wall_width - h]) cylinder(d = wooden_stick_diam, h = h, $fn = fn);
+        translate([0,0,-0.1]) cylinder(d = wooden_stick_diam, h = h, $fn = fn);
     }
-
-
 }
 
 module assembly()
@@ -140,4 +150,14 @@ module assembly()
     flower([0,0,70]);
 }
 
-assembly();
+
+// Exportable modules
+if (mode == "Assembly") {
+    assembly();
+} else if (mode == "Pot") {
+    pot();
+} else if (mode == "Leaf") {
+    leaf();
+} else if (mode == "Flower") {
+    flower();
+}
