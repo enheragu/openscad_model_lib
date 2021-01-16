@@ -11,7 +11,7 @@ wooden_stick_diam = 2.8;
 bezier_step = 0.03;
 
 // Minimum wall width
-wall_width = 1;
+wall_width = 2;
 
 
 /* [Flower settings] */
@@ -122,7 +122,7 @@ module leaf(translation = [0,0,0])
     }
 }
 
-module 2dline(points, point_diam)
+module 2dline(points, point_rad)
 {
     union()
     {
@@ -130,8 +130,8 @@ module 2dline(points, point_diam)
         {
             hull()
             {
-                translate(points[index]) circle(point_diam, $fn = fn);
-                translate(points[index+1]) circle(point_diam, $fn = fn);
+                translate(points[index]) circle(r = point_rad, $fn = fn);
+                translate(points[index+1]) circle(r = point_rad, $fn = fn);
             }
         }
     }
@@ -156,11 +156,11 @@ module flower(translation = [0,0,0])
         {
             // For some reason 360 fails -.- Make two partial instead
             rotate_extrude(angle = 270, convexity = 10, $fn = fn)
-            2dline(points,wall_width);
+            2dline(points,wall_width/2); // Uses it as radious, not as diameter :)
             
             rotate([0,0,180])
             rotate_extrude(angle = 270, convexity = 10, $fn = fn)
-            2dline(points,wall_width);
+            2dline(points,wall_width/2); // Uses it as radious, not as diameter :)
 
             // Make some structure for the stick :)
             diam = pC.x*2/3;
