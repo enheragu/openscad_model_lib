@@ -1,6 +1,7 @@
 
 
 /* [Export settings] */
+// You can use this mode setting to export each of the models or see the final assembly with all of them
 mode = "Assembly"; // [Assembly, Pot, Leaf, Flower]
 
 /* [Model settings] */
