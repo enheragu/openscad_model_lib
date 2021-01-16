@@ -28,6 +28,19 @@ curvature_control_width = 25;
 curvature_control_heigth = 10;
 
 
+/* [Leaf settings] */
+// End point of the leaf, one of the sides is placed in [0,0] and the other is up to you (mm)
+leaf_end = [0,50];
+
+// The max width from center to side and hight in which this belly is placed  (mm)
+curvature_control_side1 = [26,21];
+
+// Same with side1 but on the other side. Set width to negative and same heigth to be simetric (mm)
+curvature_control_side2 = [26,21];
+
+// The hole for the stick is made so that the leaf remains at this angle (deg)
+leaf_angle = 30;
+
 /* [Pot settings] */
 // Default related to wooden stick diam when is [0,0]. If set means X and Y of the square border before extrusion (mm)
 square_border = [0,0];
@@ -99,9 +112,10 @@ module leaf(translation = [0,0,0])
 {
 
     p1 = [0,0];
-    p2 = [0,50];
-    pC1 = [26,17];
-    pC2 = [-26,17];
+    p2 = leaf_end;
+
+    pC1 = [(curvature_control_side1.x/2)*2 - (p1.x + p2.x)/2 , curvature_control_side1.y*2 - (p1.y + p2.y)/2];
+    pC2 = [(-abs(curvature_control_side2.x)/2)*2 - (p1.x + p2.x)/2 , curvature_control_side2.y*2 - (p1.y + p2.y)/2];
 
     points1 = concat([p1], quadraticBezierCurve2D(p1, pC1, p2), [p2]);
     points2 = concat([p1], quadraticBezierCurve2D(p1, pC2, p2), [p2]);
@@ -110,7 +124,7 @@ module leaf(translation = [0,0,0])
     difference()
     {
         translate([0,-wall_width*4,0])
-        rotate([30,0,0])
+        rotate([leaf_angle,0,0])
         linear_extrude(height = wall_width, convexity = 10)
         union()
         {
