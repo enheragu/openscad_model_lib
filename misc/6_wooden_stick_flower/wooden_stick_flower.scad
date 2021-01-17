@@ -133,7 +133,7 @@ module leaf(translation = [0,0,0])
             polygon(points2);
         }
         // stick hole
-        cylinder(d = wooden_stick_diam, h = wall_width*10, $fn = fn);
+        cylinder(d = wooden_stick_diam + tolerance, h = wall_width*10, $fn = fn);
     }
 }
 
@@ -183,7 +183,7 @@ module flower(translation = [0,0,0])
         }
         // Hole for the stick
         h = wall_width*5;
-        translate([0,0,-0.1]) cylinder(d = wooden_stick_diam, h = h, $fn = fn);
+        translate([0,0,-0.1]) cylinder(d = wooden_stick_diam + tolerance, h = h, $fn = fn);
     }
 }
 

@@ -16,3 +16,9 @@ It is work in progess and I add new stuff whenever I need it.
   - boards
   - elements
 - utils: some modules and functions that I find useful to have to be used in the designs.
+
+I like repos where you can see at first glance what's it about. You will find images and documentation for each of the models so runnning OpenSCAD with the code is not needed for a fast check.
+
+## Feedback
+
+Hey, if you have any feedback about any of this (errors, enhancements, or just comments about the code), do not hesitate in contacting!
