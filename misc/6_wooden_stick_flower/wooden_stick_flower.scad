@@ -156,7 +156,7 @@ module 2dline(points, point_rad)
 module flower(translation = [0,0,0])
 {
     // For a rotate extrude its better if all points are in the same cuadrant (X and Y > 0)
-    p1 = [wall_width,wall_width];
+    p1 = [wall_width/2,wall_width/2];
     p2 = [flower_mouth_width/2,flower_heigth];
     pC = [(curvature_control_width/2)*2 - (p1.x + p2.x)/2 , curvature_control_heigth*2 - (p1.y + p2.y)/2];
     //pC = [curvature_control_width,curvature_control_heigth];
