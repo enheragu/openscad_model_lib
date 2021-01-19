@@ -108,6 +108,24 @@ module pot()
     }
 }
 
+// Base for the voronoi version
+module base()
+{
+    h = wall_width*5;
+    difference()
+    {
+        union()
+        {
+            d2 = (lower_diameter == 0) ? wooden_stick_diam*14 : lower_diameter;
+            cylinder(d = d2, h = wall_width, $fn = fn);
+
+            cylinder(d = wooden_stick_diam+tolerance+wall_width*2, h = h, $fn = fn);
+        }
+        translate([0,0,-0.1])
+        cylinder(d = wooden_stick_diam+tolerance, h = h*2, $fn = fn);
+    }
+}
+
 // Leaf
 module leaf(translation = [0,0,0])
 {
@@ -195,6 +213,8 @@ module assembly()
     leaf([0,0,50]);
     color("red")
     flower([0,0,70]);
+
+    // base();
 }
 
 
@@ -208,3 +228,5 @@ if (mode == "Assembly") {
 } else if (mode == "Flower") {
     flower();
 }
+
+

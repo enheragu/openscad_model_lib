@@ -17,6 +17,6 @@ This model can be found and edited in Thingiverse Customizer on [thing 4725740](
 
  | Original with printed pot | Openscad Assembly view |  Full printed model | Voronized version |
  :--------------------------------:|:--------------------------------:|:--------------------------------:|:--------------------------------:|
-  <img src="./../media/6_wooden_stick_flower_original.jpg" height=400;/> | <img src="./../media/6_wooden_stick_flower_openscad.PNG" height=400;/> |
+  <img src="./../media/6_wooden_stick_flower_original.jpg" height=400;/> | <img src="./../media/6_wooden_stick_flower_openscad.PNG" height=400;/> | <img src="./../media/6_wooden_stick_flower_printed.jpg" height=400;/> |
 
 What strange model can you get? Do not hesitate on sharing the model!
