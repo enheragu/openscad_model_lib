@@ -1,0 +1,12 @@
+{
+    "parameterSets": {
+        "design default values": {
+            "fn": "120",
+            "hole_diameter": "2",
+            "support_height": "15",
+            "tube_diameter": "20",
+            "wall_width": "3"
+        }
+    },
+    "fileFormatVersion": "1"
+}
