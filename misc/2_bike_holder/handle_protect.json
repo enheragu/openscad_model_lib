@@ -8,7 +8,7 @@
             "make_hole": "true",
             "margin": "5",
             "screw_head_diam": "5",
-            "screw_head_heigth": "2",
+            "screw_head_height": "2",
             "screw_metric": "4",
             "wall_size": "3"
         }

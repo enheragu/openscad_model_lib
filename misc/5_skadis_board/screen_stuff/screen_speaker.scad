@@ -70,10 +70,10 @@ module negative_base_speaker(translation = [0,0,0])
 
         // Speaker hole
         diameter = 13;
-        heigth = 23;
+        height = 23;
         color("red")
         translate([13,enlarge_speaker_height/2 - diameter/2,0])
-        filleted_rectangle(heigth,diameter,speaker_width+clip_wall*2+0.2,diameter/2);       
+        filleted_rectangle(height,diameter,speaker_width+clip_wall*2+0.2,diameter/2);       
         
         cable_diam=4;
         translate([speaker_body_length+speaker_attachment_length*2,cable_diam/2,0])

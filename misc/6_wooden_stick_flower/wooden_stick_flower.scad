@@ -16,8 +16,8 @@ wall_width = 2;
 
 
 /* [Flower settings] */
-// The heigth of the flower (mm)
-flower_heigth = 35;
+// The height of the flower (mm)
+flower_height = 35;
 
 // The diameter of the upper hole, the "mouth" (mm)
 flower_mouth_width = 14;
@@ -25,8 +25,8 @@ flower_mouth_width = 14;
 // The max diameter inside the flower (the "belly") (mm)
 curvature_control_width = 25;
 
-// Heigth in which this max curvature is placed (mm)
-curvature_control_heigth = 10;
+// height in which this max curvature is placed (mm)
+curvature_control_height = 10;
 
 
 /* [Leaf settings] */
@@ -36,7 +36,7 @@ leaf_end = [0,50];
 // The max width from center to side and hight in which this belly is placed  (mm)
 curvature_control_side1 = [26,21];
 
-// Same with side1 but on the other side. Set width to negative and same heigth to be simetric (mm)
+// Same with side1 but on the other side. Set width to negative and same height to be simetric (mm)
 curvature_control_side2 = [26,21];
 
 // The hole for the stick is made so that the leaf remains at this angle (deg)
@@ -175,9 +175,9 @@ module flower(translation = [0,0,0])
 {
     // For a rotate extrude its better if all points are in the same cuadrant (X and Y > 0)
     p1 = [wall_width/2,wall_width/2];
-    p2 = [flower_mouth_width/2,flower_heigth];
-    pC = [(curvature_control_width/2)*2 - (p1.x + p2.x)/2 , curvature_control_heigth*2 - (p1.y + p2.y)/2];
-    //pC = [curvature_control_width,curvature_control_heigth];
+    p2 = [flower_mouth_width/2,flower_height];
+    pC = [(curvature_control_width/2)*2 - (p1.x + p2.x)/2 , curvature_control_height*2 - (p1.y + p2.y)/2];
+    //pC = [curvature_control_width,curvature_control_height];
 
     points = quadraticBezierCurve2D(p1, pC, p2);
     points1 = quadraticBezierCurve2D(p1, [-pC.x,pC.y], [-p2.x,p2.y]);

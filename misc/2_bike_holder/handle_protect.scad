@@ -32,7 +32,7 @@ head_shape="C"; //[C:Cone,S:Straigth Cylinder]
 screw_metric = 4;
 
 // Head of the scre head to make space for it (desinged for conic head screws) (mm)
-screw_head_heigth = 4;
+screw_head_height = 4;
 
 // Diameter of the screw (mm)
 screw_head_diam = 8;
@@ -50,26 +50,26 @@ module toroid(diameter, section_diameter)
 
 module handle_protect_rounded()
 {
-    piece_heigth = hole_height + bottom_height;
-    piece_diam = handle_diam + margin + wall_size + piece_heigth*2;
+    piece_height = hole_height + bottom_height;
+    piece_diam = handle_diam + margin + wall_size + piece_height*2;
     difference()
     {
         difference()
         {
-            cylinder(d = piece_diam, h = piece_heigth, $fn = fn);
+            cylinder(d = piece_diam, h = piece_height, $fn = fn);
             translate([0,0,wall_size])
             // Adds *1.1 to ensure cutting
             cylinder(d = handle_diam + margin, h = hole_height*1.1, $fn=fn);
         }
-        translate([0,0,piece_heigth])
-        toroid(piece_diam, (piece_heigth)*2-wall_size);
+        translate([0,0,piece_height])
+        toroid(piece_diam, (piece_height)*2-wall_size);
     }
 }
 
 
 module handle_protect_cone()
 {
-    piece_heigth = hole_height + bottom_height;
+    piece_height = hole_height + bottom_height;
     piece_diam_1 = piece_diameter;
     piece_diam_2 = handle_diam + margin + wall_size*2;
     difference()
@@ -78,7 +78,7 @@ module handle_protect_cone()
         {
             cylinder(d = piece_diam_1, h = wall_size, $fn = fn);
             translate([0,0,wall_size])
-            cylinder(d1 = piece_diam_1, d2 = piece_diam_2, h = piece_heigth - wall_size, $fn = fn);
+            cylinder(d1 = piece_diam_1, d2 = piece_diam_2, h = piece_height - wall_size, $fn = fn);
         }
         translate([0,0,bottom_height])
         cylinder(d = handle_diam + margin, h = hole_height*1.1, $fn=fn);
@@ -91,8 +91,8 @@ module screw_hole()
     diam_2 = screw_head_diam;
 
     // Adds 0.1 to ensure complete cutting
-    translate([0,0, (bottom_height - screw_head_heigth)+0.1])
-    cylinder(d1 = diam_1, d2 = diam_2, h = screw_head_heigth, $fn = fn);
+    translate([0,0, (bottom_height - screw_head_height)+0.1])
+    cylinder(d1 = diam_1, d2 = diam_2, h = screw_head_height, $fn = fn);
     translate([0,0, -0.1])
     cylinder(d = screw_metric, h = wall_size+0.1, $fn = fn);
 }
