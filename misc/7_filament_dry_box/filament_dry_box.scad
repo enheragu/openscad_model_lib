@@ -5,10 +5,10 @@ export = "I"; // [I:Inner Side, O: Outer Side]
 
 /* [Tube handle Info] */
 // Tube diameter (mm)
-tube_diameter = 20;
+tube_diameter = 16;
 
 // Wall width (mm)
-wall_width = 3;
+wall_width = 3.5;
 
 support_height = 15;
 
@@ -17,10 +17,10 @@ support_height = 15;
 option = "N"; //[S:Screw,N:Nut]
 
 // Hole diameter for the screws
-hole_diameter = 2;
+hole_diameter = 3;
 
 // Diameter of the screw head or diameter of the circumscribed circle for the nut
-head_diameter = 4;
+head_diameter = 7;
 
 // Depth of the screw/nut footprint
 footprint_depth = 1;
@@ -69,7 +69,7 @@ module base_support(round_rad, diameter, diameter_support)
         // screw holes
         rad_holes = diameter_support/2 - wall_width - round_rad;
         new_fn = (option == "N") ? 6 : fn;
-        for (i = [0 : 2])
+        for (i = [0 : 3])
         {
             rotate([0,0,90*i])
             translate([rad_holes,0,0])
@@ -105,10 +105,10 @@ module tube_support(round_rad, diameter, diameter_support)
             } 
         }
         side = tube_diameter+tolerance;
-        translate([0,0,-0.1])
+        translate([0,0,wall_width])
         cylinder(d = side, h = support_height+0.2, $fn = fn);
 
-        translate([-side/2,-diameter_support,-0.1])
+        translate([-side/2,-diameter_support,wall_width])
         cube([side,diameter_support,side+0.2]);
     }
 }
