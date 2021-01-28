@@ -13,6 +13,7 @@ screw_head_diam = 5;
 
 nut_diam = 5;
 
+
 /* [Power strip Info] */
 
 // Power outlet height
@@ -77,19 +78,67 @@ module base_stand()
     }
 }
 
+// sn -> screw/nut dimension
+module screw_nut_support(side, h, sn_diam, hole_metric, fn_input)
+{
+    rotate([0,90,0])
+    translate([-side/2,side/2,0])
+    difference()
+    {
+        // Center in X and Y for easyer with cylinders
+        translate([-side/2,-side/2,0])
+        //cube([side, side, h]);
+        filleted_rectangle(side,side,h, wall_width/2);
+
+        translate([0,0,wall_width])
+        cylinder(d = sn_diam+tolerance*2, h = h, $fn = fn_input);
+
+        translate([0,0,-0.1])
+        cylinder(d = hole_metric+tolerance, h = h+0.2, $fn = fn);
+    }
+}
+
 module table_support()
 {
     length = max(screw_head_diam, nut_diam) + wall_width*2 + tolerance*2;
     size_x = leg_size.x + wall_width*2 + tolerance*2;
     size_y = leg_size.y + wall_width*2 + tolerance*2;
+
+    cut_width = 2;
     rotate([0,90,0])
-    translate([-wall_width-tolerance,-size_y/2,0])
-    difference()
+    translate([-wall_width,-size_y/2,0])
+    union()
     {
-        filleted_rectangle(size_x, size_y, length, wall_width/2);
-        
-        translate([wall_width, size_y/2 - leg_size.y/2, -0.1])
-        cube([leg_size.x,leg_size.y,length+0.2]);
+        difference()
+        {
+            filleted_rectangle(size_x, size_y, length, wall_width/2);
+            
+            translate([wall_width, size_y/2 - leg_size.y/2, -0.1])
+            cube([leg_size.x,leg_size.y,length+0.2]);
+
+            // Make cut between both parts of clip
+            translate([size_x/2 - cut_width/2, -0.1, -0.1])
+            cube([cut_width, size_y+0.2, length + 0.2]);
+        }
+
+        n_h = wall_width + nut_diam/2; 
+        n_side = nut_diam + wall_width*2 + tolerance*2;
+        translate([size_x/2+cut_width/2, size_y-wall_width, 0])
+        screw_nut_support(n_side, n_h, nut_diam, scre_hole_diam, 6);
+
+        translate([size_x/2+cut_width/2,wall_width-n_side,0])
+        screw_nut_support(n_side, n_h, nut_diam, scre_hole_diam, 6);
+
+
+        s_side = screw_head_diam + wall_width*2 + tolerance*2;
+        s_h = wall_width + screw_head_diam/2;
+        translate([size_x/2-cut_width/2, size_y-wall_width, s_side])
+        rotate([0,180,0])
+        screw_nut_support(s_side, s_h, screw_head_diam, scre_hole_diam, fn);
+
+        translate([size_x/2-cut_width/2, wall_width-s_side, s_side])
+        rotate([0,180,0])
+        screw_nut_support(s_side, s_h, screw_head_diam, scre_hole_diam, fn);
     }
 }
 
