@@ -26,7 +26,10 @@ ps_width = 53;
 cable_hole = false;
 
 // Diameter of the cable (set to 0 if no cable hole is needed) (mm)
-ps_cable_diameter = 12.1;
+cable_diameter = 12.1;
+
+// 0,0 means centered (mm,mm)
+cable_position = [0,0];
 
 // Border on each side up to the power outlet slot (mm)
 border_side = 3;
@@ -58,25 +61,6 @@ module filleted_rectangle(size_x,size_y,size_z, round_rad)
     }
 }
 
-module base_stand()
-{
-    size_x = support_length + wall_width*2 + tolerance*2;
-    size_y = ps_width + wall_width*2 + tolerance*2;
-    size_z = ps_height + wall_width*2 + tolerance*2;
-
-    // Center in Y for easyer handling
-    translate([0,-size_y/2,0])
-    difference()
-    {
-        filleted_rectangle(size_x,size_y,size_z, wall_width/2);
-        translate([wall_width, size_y/2 - ps_width/2, size_z/2 - ps_height/2])
-        cube([size_x*tolerance*2,ps_width*tolerance*2,ps_height*tolerance*2]); // Use size_x to ensure complete cutting
-
-        hole_width = ps_width-border_side*2;
-        translate([wall_width + border_end, size_y/2 - hole_width/2, ps_height])
-        filleted_rectangle(size_x, ps_width-border_side*2, ps_height, wall_width/2);
-    }
-}
 
 // sn -> screw/nut dimension
 module screw_nut_support(side, h, sn_diam, hole_metric, fn_input)
@@ -121,6 +105,8 @@ module table_support()
             cube([cut_width, size_y+0.2, length + 0.2]);
         }
 
+
+        // Add screw/nut support
         n_h = wall_width + nut_diam/2; 
         n_side = nut_diam + wall_width*2 + tolerance*2;
         translate([size_x/2+cut_width/2, size_y-wall_width, 0])
@@ -142,5 +128,46 @@ module table_support()
     }
 }
 
-base_stand();
-table_support();
+module support()
+{
+    size_x = support_length + wall_width*2 + tolerance*2;
+    size_y = ps_width + wall_width*2 + tolerance*2;
+    size_z = ps_height + wall_width*2 + tolerance*2;
+
+    // Center in Y for easyer handling
+    difference()
+    {
+        union()
+        {
+            translate([0,-size_y/2,0])
+            difference()
+            {
+                filleted_rectangle(size_x,size_y,size_z, wall_width/2);
+                translate([wall_width, size_y/2 - ps_width/2, size_z/2 - ps_height/2])
+                cube([size_x*tolerance*2,ps_width*tolerance*2,ps_height*tolerance*2]); // Use size_x to ensure complete cutting
+
+                hole_width = ps_width-border_side*2;
+                translate([wall_width + border_end, size_y/2 - hole_width/2, ps_height])
+                filleted_rectangle(size_x, ps_width-border_side*2, ps_height, wall_width/2);
+            }
+            table_support();
+        }
+        translate([0,-size_y/2,0])
+        if (cable_hole)
+        {
+            // Cable hole        
+            cable_hole_y = cable_diameter + tolerance*2 + 0.2;
+            cable_hole_z = size_y/2 + cable_position.y;
+
+            translate([-0.1, size_y/2-cable_hole_y/2-0.1 + cable_position.x, -0.1])
+            cube([size_x + 0.2,cable_hole_y, cable_hole_z]);    
+
+            translate([-0.1, size_y/2 + cable_position.x, size_y/2 + cable_position.y])
+            rotate([0,90,0])
+            cylinder(d = cable_diameter + tolerance*2, h = wall_width + 0.2, $fn = fn);
+        }
+    }
+}
+
+
+support();
