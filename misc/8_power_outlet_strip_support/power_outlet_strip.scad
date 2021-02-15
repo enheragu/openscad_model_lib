@@ -5,13 +5,16 @@
 wall_width = 3;
 
 // Support length (mm)
-support_length = 50;
+support_length = 40;
 
-scre_hole_diam = 3;
+// (mm))
+screw_hole_diam = 5.8;
 
-screw_head_diam = 5;
+// (mm)
+screw_head_diam = 9.9;
 
-nut_diam = 5;
+// (mm)
+nut_diam = 11.1;
 
 
 /* [Power strip Info] */
@@ -39,7 +42,7 @@ border_end = 3;
 
 /* [Leg Info] */
 // Leg dimensions, take into account to add rubbers here (mm,mm)
-leg_size = [37.31, 65.8];
+leg_size = [43, 65.8];
 
 /* [Printer settings] */
 // Printer tolerance. Printers are not perfect, pieces need a bit of margin to fit. (mm)
@@ -110,21 +113,22 @@ module table_support()
         n_h = wall_width + nut_diam/2; 
         n_side = nut_diam + wall_width*2 + tolerance*2;
         translate([size_x/2+cut_width/2, size_y-wall_width, 0])
-        screw_nut_support(n_side, n_h, nut_diam, scre_hole_diam, 6);
+        screw_nut_support(n_side, n_h, nut_diam, screw_hole_diam, 6);
 
         translate([size_x/2+cut_width/2,wall_width-n_side,0])
-        screw_nut_support(n_side, n_h, nut_diam, scre_hole_diam, 6);
+        screw_nut_support(n_side, n_h, nut_diam, screw_hole_diam, 6);
 
 
-        s_side = screw_head_diam + wall_width*2 + tolerance*2;
+        // Uses nut computed side as nut is bigger thatn screw of same metric:
+        // s_side = screw_head_diam + wall_width*2 + tolerance*2;
         s_h = wall_width + screw_head_diam/2;
-        translate([size_x/2-cut_width/2, size_y-wall_width, s_side])
+        translate([size_x/2-cut_width/2, size_y-wall_width, n_side])
         rotate([0,180,0])
-        screw_nut_support(s_side, s_h, screw_head_diam, scre_hole_diam, fn);
+        screw_nut_support(n_side, s_h, screw_head_diam, screw_hole_diam, fn);
 
-        translate([size_x/2-cut_width/2, wall_width-s_side, s_side])
+        translate([size_x/2-cut_width/2, wall_width-n_side, n_side])
         rotate([0,180,0])
-        screw_nut_support(s_side, s_h, screw_head_diam, scre_hole_diam, fn);
+        screw_nut_support(n_side, s_h, screw_head_diam, screw_hole_diam, fn);
     }
 }
 
