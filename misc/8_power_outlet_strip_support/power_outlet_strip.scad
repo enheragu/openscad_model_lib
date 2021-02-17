@@ -2,7 +2,7 @@
 /* [Support Info] */
 
 // Width of printed wall (mm)
-wall_width = 3;
+wall_width = 3; // 0.1
 
 // Support length (mm)
 support_length = 40;
@@ -20,10 +20,10 @@ nut_diam = 11.1;
 /* [Power strip Info] */
 
 // Power outlet height
-ps_height = 40;
+ps_height = 40; // 0.1
 
 // Power outlet width (mm)
-ps_width = 53;
+ps_width = 53; // 0.1
 
 // Whether to perform hole for the cable or not
 cable_hole = false;
