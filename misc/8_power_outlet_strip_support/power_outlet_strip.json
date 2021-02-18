@@ -17,12 +17,12 @@
             "tolerance": "0.5",
             "wall_width": "3"
         },
-        "EnderTable": {
+        "EnderTableCable": {
             "border_end": "10",
             "border_side": "8",
-            "cable_diameter": "12.1",
-            "cable_hole": "false",
-            "cable_position": "[0, 0]",
+            "cable_diameter": "14",
+            "cable_hole": "true",
+            "cable_position": "[-7, 0]",
             "fn": "150",
             "leg_size": "[54, 51]",
             "nut_diam": "11.1",

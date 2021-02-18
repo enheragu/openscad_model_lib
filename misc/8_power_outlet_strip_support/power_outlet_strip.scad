@@ -160,15 +160,15 @@ module support()
         if (cable_hole)
         {
             // Cable hole        
-            cable_hole_y = cable_diameter + tolerance*2 + 0.2;
-            cable_hole_z = size_y/2 + cable_position.y;
+            cable_hole_y = cable_diameter + tolerance*2;
+            cable_hole_z = size_z/2 + cable_position.y + cable_hole_y/2;
 
-            translate([-0.1, size_y/2-cable_hole_y/2-0.1 + cable_position.x, -0.1])
-            cube([size_x + 0.2,cable_hole_y, cable_hole_z]);    
+            translate([-0.1, size_y/2 - cable_hole_y/2  + cable_position.x, -0.1])
+            cube([size_x + 0.2,cable_hole_y, cable_hole_z-cable_hole_y/2]);    
 
-            translate([-0.1, size_y/2 + cable_position.x, size_y/2 + cable_position.y])
+            translate([-0.1, size_y/2 + cable_position.x, size_z/2 + cable_position.y])
             rotate([0,90,0])
-            cylinder(d = cable_diameter + tolerance*2, h = wall_width + 0.2, $fn = fn);
+            cylinder(d = cable_hole_y, h = wall_width + 0.2, $fn = fn);
         }
     }
 }
