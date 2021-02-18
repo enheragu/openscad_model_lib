@@ -10,13 +10,16 @@ You can see the view in openSCAD of both versions, one for the upper side withou
  :--------------------------------:|:--------------------------------:|
   <img src="./../media/8_power_outlet_strip_scad.PNG" height=300;/> | <img src="./../media/8_power_outlet_strip_scad_cable.PNG" height=300;/> 
 
+I added some anti slip rubber I bought in the supermarket (yeah, you can use whatever). I put them in the pieces to "stick" to the table leg and not move:
+
+<img src="./../media/8_power_outlet_strip_antislip.jpg" height=300;/>
 
 You can check a couple of examples printed by myself:
 
  | Example 1 | Example 2 |
  :--------------------------------:|:--------------------------------:|
-  <img src="./../media/8_power_outlet_strip_1.jpg" height=400;/> | <img src="./../media/8_power_outlet_strip_1.jpg" height=400;/> 
-  <img src="./../media/8_power_outlet_strip_1_detail.jpg" height=150;/> | <img src="./../media/8_power_outlet_strip_1_detail.jpg" height=150;/> 
+  <img src="./../media/8_power_outlet_strip_1.jpg" height=400;/> | <img src="./../media/8_power_outlet_strip_2.jpg" height=400;/> 
+  <img src="./../media/8_power_outlet_strip_1_detail.jpg" height=150;/> | <img src="./../media/8_power_outlet_strip_2_detail.jpg" height=150;/> 
 
 > Example 1 is based on default model and `CableSide` version in params `power_outlet_strip.json`.
 
