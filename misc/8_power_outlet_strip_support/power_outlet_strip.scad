@@ -7,22 +7,22 @@ wall_width = 3; // 0.1
 // Support length (mm)
 support_length = 40;
 
-// (mm))
+// Diameter of the hole (metric?) (mm)
 screw_hole_diam = 5.8;
 
-// (mm)
+// Diameter of the screw head (mm)
 screw_head_diam = 9.9;
 
-// (mm)
+// Nut circunscribed circunference diameter (mm)
 nut_diam = 11.1;
 
 
 /* [Power strip Info] */
 
-// Power outlet height
+// Power strip height
 ps_height = 40; // 0.1
 
-// Power outlet width (mm)
+// Power strip width (mm)
 ps_width = 53; // 0.1
 
 // Whether to perform hole for the cable or not
@@ -31,7 +31,7 @@ cable_hole = false;
 // Diameter of the cable (set to 0 if no cable hole is needed) (mm)
 cable_diameter = 12.1;
 
-// 0,0 means centered (mm,mm)
+// Position of the cable hole in the object. Note that 0,0 means centered (mm,mm)
 cable_position = [0,0];
 
 // Border on each side up to the power outlet slot (mm)
@@ -41,7 +41,7 @@ border_side = 3;
 border_end = 3;
 
 /* [Leg Info] */
-// Leg dimensions, take into account to add rubbers here (mm,mm)
+// Leg dimensions, take into account to add rubbers here to aboid slippery (mm,mm)
 leg_size = [43, 65.8];
 
 /* [Printer settings] */
