@@ -1,0 +1,40 @@
+{
+    "parameterSets": {
+        "CableSide": {
+            "border_end": "23",
+            "border_side": "3",
+            "cable_diameter": "15",
+            "cable_hole": "true",
+            "cable_position": "[0, 0]",
+            "fn": "150",
+            "leg_size": "[43, 65.8]",
+            "nut_diam": "11.1",
+            "ps_height": "40",
+            "ps_width": "53",
+            "screw_head_diam": "9.9",
+            "screw_hole_diam": "5.8",
+            "support_length": "50",
+            "tolerance": "0.5",
+            "wall_width": "3"
+        },
+        "EnderTableCable": {
+            "border_end": "10",
+            "border_side": "8",
+            "cable_diameter": "14",
+            "cable_hole": "true",
+            "cable_position": "[-7, 0]",
+            "fn": "150",
+            "leg_size": "[54, 51]",
+            "nut_diam": "11.1",
+            "ps_height": "41.5",
+            "ps_width": "65.5",
+            "screw_head_diam": "9.9",
+            "screw_hole_diam": "5.8",
+            "support_length": "40",
+            "tolerance": "0.5",
+            "wall_width": "3"
+        }
+    },
+    "parameterSets": "",
+    "fileFormatVersion": "1"
+}
