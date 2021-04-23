@@ -123,6 +123,21 @@ module base_lid()
     } 
 }
 
+module fake_intermediate_step()
+{
+    height = 18.2;
+    difference()
+    { 
+        union()
+        {
+            fillete_cylinder(outer_diameter, height/2, wall_width/2);
+            rotate([180,0,0])
+            fillete_cylinder(outer_diameter, height/2, wall_width/2);
+        }
+        translate([0,0,-height/2-0.1])
+        cylinder(d = screw_metric_diam+tolerance, h = height+0.2, $fn = fn);
+    }
+}
 
 
-base_lid();
+fake_intermediate_step();
