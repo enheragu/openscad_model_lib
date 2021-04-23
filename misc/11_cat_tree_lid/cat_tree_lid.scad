@@ -20,6 +20,13 @@ screw_metric_diam = 7.8;
 
 rope_diam_width = 7;
 
+wood_screw_metric = 5;
+
+// Use screw length and wood width to add extra plastic support to match both of them
+wood_screw_length = 30;
+
+wood_width = 18;
+
 /* [Printer settings] */
 // Printer tolerance. Printers are not perfect, pieces need a bit of margin to fit. (mm)
 tolerance = 0.5;
@@ -47,12 +54,29 @@ module base_obj()
     }
 }
 
+module basic_lid()
+{
+    difference()
+    {
+        base_obj();
+        
+        rotate([180,0,0])
+        translate([0,0,-wall_width-0.1])
+        cylinder(d = screw_metric_diam+tolerance, h = wall_width*2+0.2, $fn = fn);
 
-difference()
+        hole_heigth = insert_length+wall_width;
+        hole_width = rope_diam_width+tolerance*3;
+        translate([head_nut_diam/2,-hole_width/2,-hole_heigth+tolerance*2])
+        cube([outer_diameter+wall_width*2,hole_width,hole_heigth]);
+    }
+}
+
+// lid between modules
+module intermediate_lid()
 {
     union()
     {
-        base_obj();
+        basic_lid();
         // screw/nut support
         translate([0,0,-wall_width+0.2])
         rotate([180,0,0])
@@ -63,13 +87,42 @@ difference()
             cylinder(d = head_nut_diam+tolerance, h = head_nut_heigth+0.2, $fn = 6);
         }
     }
-    
-    rotate([180,0,0])
-    translate([0,0,-wall_width-0.1])
-    cylinder(d = screw_metric_diam+tolerance, h = wall_width*2+0.2, $fn = fn);
-
-    hole_heigth = insert_length+wall_width;
-    hole_width = rope_diam_width+tolerance*3;
-    translate([0,-hole_width/2,-hole_heigth+tolerance*2])
-    cube([outer_diameter+wall_width*2,hole_width,hole_heigth]);
 }
+
+// Lid between base and first module
+module base_lid()
+{
+    // Screew to wood insertion
+    function arcAngle(radious, angle,step) = [ for (a = [0 : step : angle]) [radious*cos(-a),radious*sin(-a)] ];
+
+    height = wood_screw_length - wood_width + wall_width;
+    rad = inner_diameter/2*2/3;
+
+    difference()
+    {
+        union()
+        {
+            basic_lid();
+            rotate([0,0,90])
+            for (point = arcAngle(rad,360,360/6))
+            {
+                translate([point.x,point.y,0])  
+                rotate([0,180,0])
+                fillete_cylinder(wood_screw_metric + wall_width*2, height, wall_width/2);
+            }
+        }
+
+        // holes have to go through the hole piece
+        rotate([0,0,90])
+        for (point = arcAngle(rad,360,360/6))
+        {
+            translate([point.x,point.y,0])  
+            translate([0,0,-height-0.1])
+            cylinder(d = wood_screw_metric, h = height*2+0.2, $fn = fn);
+        }
+    } 
+}
+
+
+
+base_lid();
