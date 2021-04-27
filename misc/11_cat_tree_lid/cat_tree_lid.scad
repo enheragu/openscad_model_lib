@@ -140,4 +140,43 @@ module fake_intermediate_step()
 }
 
 
-fake_intermediate_step();
+module extension()
+{
+    insert_multiplier = 2.5;
+    difference()
+    {
+        fillete_cylinder(inner_diameter, insert_length*insert_multiplier, wall_width/2);
+       
+        // Remove base obj
+        //translate([0,0,0.])
+        difference()
+        {
+            translate([0,0,-0.1])
+            fillete_cylinder(inner_diameter+0.1, insert_length, wall_width/2);
+
+            translate([0,0,-0.1])
+            cylinder(d = inner_diameter-wall_width-tolerance, h = insert_length+0.2, $fn = fn);
+        }
+
+        // Remove inner part
+        translate([0,0,-0.1])
+        cylinder(d = inner_diameter-wall_width*2, h = insert_length*insert_multiplier+0.2, $fn = fn);
+
+        hole_heigth = insert_length*insert_multiplier+wall_width;
+        hole_width = rope_diam_width+tolerance*3;
+        translate([head_nut_diam/2,-hole_width/2,-0.1])
+        cube([outer_diameter+wall_width*2,hole_width,hole_heigth]);
+    }
+}
+
+extension();
+/*union()
+{
+    color("grey")
+    extension();
+
+    translate([0,0,-0.2])
+    rotate([180,0,0])
+    color("white",0.8)
+    intermediate_lid();
+}*/
