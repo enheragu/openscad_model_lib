@@ -1,0 +1,29 @@
+{
+    "parameterSets": {
+        "tube_holder": {
+            "export": "I",
+            "fn": "120",
+            "footprint_depth": "1",
+            "head_diameter": "7",
+            "hole_diameter": "3",
+            "option": "N",
+            "support_height": "15",
+            "tolerance": "0.4",
+            "tube_diameter": "16",
+            "wall_width": "3.5"
+        },
+        "outer_holder": {
+            "export": "O",
+            "fn": "120",
+            "footprint_depth": "1",
+            "head_diameter": "7",
+            "hole_diameter": "3",
+            "option": "S",
+            "support_height": "15",
+            "tolerance": "0.4",
+            "tube_diameter": "16",
+            "wall_width": "3.5"
+        }
+    },
+    "fileFormatVersion": "1"
+}
