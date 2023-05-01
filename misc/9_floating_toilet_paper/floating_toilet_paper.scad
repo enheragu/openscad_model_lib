@@ -2,16 +2,16 @@
 /* [Floating paper support Info] */
 
 // Support height (mm)
-support_height = 55;
+support_height = 60;
 
 // Diameter of the insertable part (mm)
 support_diameter = 36; // 0.1
 
 // Base height (mm)
-base_height = 3.0; // 0.1
+base_height = 4.0; // 0.1
 
 // Base diameter (mm)
-base_diameter = 60; // 0.1
+base_diameter = 65; // 0.1
 
 /* [Other] */
 // $fn resolution

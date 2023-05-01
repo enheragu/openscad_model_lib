@@ -23,26 +23,29 @@ nut_diam = 11.1;
 ps_height = 40; // 0.1
 
 // Power strip width (mm)
-ps_width = 53; // 0.1
+ps_width = 54.5; // 0.1
 
 // Whether to perform hole for the cable or not
-cable_hole = false;
+cable_hole = true;
 
 // Diameter of the cable (set to 0 if no cable hole is needed) (mm)
-cable_diameter = 12.1;
+cable_diameter = 26.5;
 
 // Position of the cable hole in the object. Note that 0,0 means centered (mm,mm)
 cable_position = [0,0];
 
 // Border on each side up to the power outlet slot (mm)
-border_side = 3;
+border_side = 4;
 
 // Border on the end of the power strip to the first power outlet slot (mm)
-border_end = 3;
+border_end = 4; 
+
+// This flag lets you change in which piece is the nut and screw holes. If the support is smaller you might not be able to introduce the screw, just switch it :)
+invert_nut_screw = false;
 
 /* [Leg Info] */
 // Leg dimensions, take into account to add rubbers here to aboid slippery (mm,mm)
-leg_size = [43, 65.8];
+leg_size = [30.5, 42.5];
 
 /* [Printer settings] */
 // Printer tolerance. Printers are not perfect, pieces need a bit of margin to fit. (mm)
@@ -92,6 +95,7 @@ module table_support()
     size_y = leg_size.y + wall_width*2 + tolerance*2;
 
     cut_width = 2;
+    // Add screw/nut support    
     rotate([0,90,0])
     translate([-wall_width,-size_y/2,0])
     union()
@@ -107,28 +111,36 @@ module table_support()
             translate([size_x/2 - cut_width/2, -0.1, -0.1])
             cube([cut_width, size_y+0.2, length + 0.2]);
         }
-
-
-        // Add screw/nut support
+        
+        // Adds lines to invert position of nut and screw on flag
+        upper_diam = (invert_nut_screw) ? nut_diam : screw_head_diam;
+        lower_diam = (invert_nut_screw) ? screw_head_diam : nut_diam;
+        
         n_h = wall_width + nut_diam/2; 
+        s_h = wall_width + screw_head_diam/2;
+        
+        upper_h = (invert_nut_screw) ? n_h : s_h;
+        lower_h = (invert_nut_screw) ? s_h : n_h;
+        
+        upper_fn = (invert_nut_screw) ? 6 : fn;
+        lower_fn =(invert_nut_screw) ? fn : 6;
+        
         n_side = nut_diam + wall_width*2 + tolerance*2;
         translate([size_x/2+cut_width/2, size_y-wall_width, 0])
-        screw_nut_support(n_side, n_h, nut_diam, screw_hole_diam, 6);
+        screw_nut_support(n_side, upper_h, upper_diam, screw_hole_diam, upper_fn);
 
         translate([size_x/2+cut_width/2,wall_width-n_side,0])
-        screw_nut_support(n_side, n_h, nut_diam, screw_hole_diam, 6);
-
+        screw_nut_support(n_side, upper_h, upper_diam, screw_hole_diam, upper_fn);
 
         // Uses nut computed side as nut is bigger thatn screw of same metric:
         // s_side = screw_head_diam + wall_width*2 + tolerance*2;
-        s_h = wall_width + screw_head_diam/2;
         translate([size_x/2-cut_width/2, size_y-wall_width, n_side])
         rotate([0,180,0])
-        screw_nut_support(n_side, s_h, screw_head_diam, screw_hole_diam, fn);
+        screw_nut_support(n_side, lower_h, lower_diam, screw_hole_diam, lower_fn);
 
         translate([size_x/2-cut_width/2, wall_width-n_side, n_side])
         rotate([0,180,0])
-        screw_nut_support(n_side, s_h, screw_head_diam, screw_hole_diam, fn);
+        screw_nut_support(n_side, lower_h, lower_diam, screw_hole_diam, lower_fn);
     }
 }
 
