@@ -9,7 +9,7 @@ wall_width = 3; // 0.1
 // Box length (mm)
 box_length = 40;
 
-// Box height
+// Box height (mm)
 box_height = 40; // 0.1
 
 // Box width (mm)
