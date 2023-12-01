@@ -43,100 +43,104 @@ module filleted_rectangle(size_x, size_y, size_z, round_rad)
 
 
 // Tolerance expands the insertion part
-module box_base(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in = 0.0)
+module box_base(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in)
 {
     difference()
     {
         union()
         {
-            // Base box minus insertion  
-            box_x = box_width_in + wall_width_in*2 + tolerance_in*2; // Half wall width for each side
-            box_y = box_length_in + wall_width_in*2 + tolerance_in*2; // Half wall width for each side
-            box_z = box_height_in - insertion + wall_width;
-
-            filleted_rectangle(box_x, box_y, box_z, box_length_in/10);
+            filleted_rectangle(box_width_in, box_length_in, box_height_in-insertion, box_length_in/10);
 
             // Insertion extension
-            insertion_x = box_width_in + wall_width_in + tolerance_in*2; // Half wall width for each side
-            insertion_y = box_length_in + wall_width_in + tolerance_in*2; // Half wall width for each side
-            insertion_z = box_height_in + tolerance_in + wall_width;
+            insertion_x = box_width_in - wall_width_in - tolerance*2; // Half wall width for each side
+            insertion_y = box_length_in - wall_width_in - tolerance*2; // Half wall width for each side
+            insertion_z = box_height_in;
 
-            translate([wall_width_in/2 - tolerance_in, wall_width_in/2 - tolerance_in])
+            color("red")
+            translate([wall_width_in/2 + tolerance_in, wall_width_in/2 + tolerance_in])
             filleted_rectangle(insertion_x, insertion_y, insertion_z, box_length_in/10);
         }   
 
         // Empty innner of the box
-        inner_x = box_width_in + tolerance_in*2;
-        inner_y = box_length_in + tolerance_in*2;
+        inner_x = box_width_in - wall_width_in*2 - tolerance_in*4;
+        inner_y = box_length_in - wall_width_in*2 - tolerance_in*4;
         inner_z = box_height_in + wall_width;
-        translate([wall_width_in - tolerance_in, wall_width_in - tolerance_in, wall_width_in])
+
+        translate([wall_width_in + tolerance_in*2, wall_width_in + tolerance_in*2, wall_width_in])
         filleted_rectangle(inner_x, inner_y, inner_z, box_length_in/10);
     }
     
 }
 
-module box_lid(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in = 0.0)
+module box_lid(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in)
 {
     // Base box
     difference()
     {
-        lid_x = box_width_in + wall_width_in*2 + tolerance_in*2; // Half wall width for each side
-        lid_y = box_length_in + wall_width_in*2 + tolerance_in*2; // Half wall width for each side
         lid_z = wall_width_in + insertion + tolerance_in;
 
-        filleted_rectangle(lid_x, lid_y, lid_z, box_length_in/10);
+        filleted_rectangle(box_width_in, box_length_in, lid_z, box_length_in/10);
         
-        insertion_x = box_width_in + wall_width_in + tolerance_in*2; // Half wall width for each side
-        insertion_y = box_length_in + wall_width_in + tolerance_in*2; // Half wall width for each side
-        insertion_z = box_height_in + tolerance_in*2;
+        insertion_x = box_width_in - wall_width_in - tolerance; // Half wall width for each side
+        insertion_y = box_length_in - wall_width_in - tolerance; // Half wall width for each side
+        insertion_z = box_height_in;
 
-        translate([wall_width_in/2, wall_width_in/2, wall_width_in])
+        translate([wall_width_in/2 + tolerance_in/2, wall_width_in/2 + tolerance_in/2, insertion])
         filleted_rectangle(insertion_x, insertion_y, insertion_z, box_length_in/10);
     }
 }
 
 
-module box_intermediate(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in = 0.0)
+module box_intermediate(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in)
 {
-    difference()
+    translate([0,0,insertion])
+    // difference()
     {
-        box_base(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in);
-        
-        insertion_x = box_width_in + wall_width_in + tolerance_in*2; // Half wall width for each side
-        insertion_y = box_length_in + wall_width_in + tolerance_in*2; // Half wall width for each side
-        insertion_z = insertion + tolerance_in*2;
-
-        translate([wall_width_in/2, wall_width_in/2, -tolerance_in])
-        filleted_rectangle(insertion_x, insertion_y, insertion_z, box_length_in/10);
+        union()
+        {
+            box_base(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in);
+            
+            translate(v = [box_width_in,0,wall_width_in]) 
+            rotate([180,0,180])
+            box_lid(box_width_in, box_length_in, box_height_in, wall_width_in, tolerance_in);
+        }
     }
 }
 
+
+box_external_wdith = box_width + wall_width*2 + tolerance*4; //needs tolerance for insertion and for inner part
+box_external_length = box_length + wall_width*2 + tolerance*4; //needs tolerance for insertion and for inner part
+box_external_height = box_height + wall_width + tolerance;
 
 if (export == "L")
 {
     // translate([box_width,0,box_height])
     // rotate([180,0,180])
-    box_lid(box_width, box_length, box_height, wall_width, tolerance);
+    box_lid(box_external_wdith, box_external_length, box_external_height, wall_width, tolerance);
 }
 else if (export == "I")
 {
-    box_intermediate(box_width, box_length, box_height, wall_width, tolerance);       
+    box_intermediate(box_external_wdith, box_external_length, box_external_height, wall_width, tolerance);       
 }
 else if (export == "B")
 {
-    box_base(box_width, box_length, box_height, wall_width, tolerance);
+    box_base(box_external_wdith, box_external_length, box_external_height, wall_width, tolerance);
 }
 else if (export == "A")
-{
+{    
     // Display assembly
-    color("red", 0.5)
-    translate([box_width+wall_width*2+tolerance*2,0,box_height*2+wall_width - insertion])
-    rotate([180,0,180])
-    box_lid(box_width, box_length, box_height, wall_width, tolerance);
+    color("CadetBlue", 1)
+    // translate([box_external_wdith+wall_width*2+tolerance*2,0,box_external_height*2+wall_width+insertion*2])
+    // rotate([180,0,180])
+    box_lid(box_external_wdith, box_external_length, box_external_height, wall_width, tolerance);
 
-    translate([0,0,box_height-insertion])
-    color("green", 0.5) box_intermediate(box_width, box_length, box_height, wall_width, tolerance);
-    color("grey", 0.5) box_base(box_width, box_length, box_height, wall_width, tolerance);
+    // translate([0,0,box_external_height])
+    color("SteelBlue", 1) 
+    translate([0,box_external_length+10,0])
+    box_intermediate(box_external_wdith, box_external_length, box_external_height, wall_width, tolerance);
+    color("PowderBlue", 1) 
+    translate([0,box_external_length*2+20,0])
+    box_base(box_external_wdith, box_external_length, box_external_height, wall_width, tolerance);
 }
 else
 {
