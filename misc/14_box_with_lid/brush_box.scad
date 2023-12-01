@@ -91,7 +91,11 @@ else if (export_filled == "B")
 else if (export_filled == "A")
 {
     // Display assembly
+    color("red", 1)
+    translate([0,box_length + 10,0])
     lid();
+
+    color("orange", 1) 
     base();
 }
 else

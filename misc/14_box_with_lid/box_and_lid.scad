@@ -129,12 +129,13 @@ else if (export == "B")
 else if (export == "A")
 {
     // Display assembly
-    color("red", 0.1)
-    translate([box_width,0,box_height])
-    rotate([180,0,180])
+    color("red", 1)
+    // translate([box_width,0,box_height])
+    // rotate([180,0,180])
+    translate([0,10+box_length,0])
     box_lid(box_width, box_length, box_height, wall_width, tolerance);
 
-    color("grey", 0.1) box_base(box_width, box_length, box_height, wall_width, 0);
+    color("orange", 1) box_base(box_width, box_length, box_height, wall_width, 0);
 }
 else
 {
