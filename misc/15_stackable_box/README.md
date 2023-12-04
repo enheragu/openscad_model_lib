@@ -1,7 +1,7 @@
 # Stackable box
 
 
-This model is a parametric model of a rounded edjes stackable box. The 'Assembly' view in OpenSCAD should show the following view (Upper and bottom view).
+This model is a parametric model of a rounded edjes stackable box. The 'Assembly' view in OpenSCAD should show the following view (Upper and bottom view). THe main file for this model is `stackable_box.scad`
 
 <img src="./../media/15_stackable_box_scad_up.png" width=400;/> <img src="./../media/15_stackable_box_scad_down.png" width=400;/>
 
@@ -9,6 +9,6 @@ This model is a parametric model of a rounded edjes stackable box. The 'Assembly
 
 ### Dice box
 
-I made a custom model of this to be able to store some dices or cubes. The 'Assembly' view in OpenSCAD looks as:
+I made a custom model of this to be able to store some dices or cubes. The 'Assembly' view in OpenSCAD `dice_stackable_box.scad` file looks as:
 
 <img src="./../media/15_stackable_box_scad_dice_up.png" width=400;/> <img src="./../media/15_stackable_box_scad_dice_down.png" width=400;/>

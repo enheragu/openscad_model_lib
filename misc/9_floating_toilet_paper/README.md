@@ -6,7 +6,7 @@ This model is based on [thing 3547534](https://www.thingiverse.com/thing:3547534
 
 Main changes are adding a bigger sticking base, as the original ones kept falling from the wall. I use double sided tape and I need some extra space. I also reshaped it a little and made the parametric version based on OpenScad to have more options when cusotmizing it (the other one could easily be changed in any slicer but...).
 
-This model can be found and edited in Thingiverse Customizer on [thing ??](??).
+This model can be found and edited in Thingiverse Customizer on [thing 6351781](https://www.thingiverse.com/thing:6351781).
 
 The model itself has the following appearance:
 
@@ -14,7 +14,12 @@ The model itself has the following appearance:
 
 You can check it once printed:
 
-<img src="./../media/8_power_outlet_strip_antislip.jpg" height=300;/>
+<img src="./../media/9_floating_toilet_paper_print.png" height=300;/>
+
+
+And also once installed :)
+
+<img src="./../media/9_floating_toilet_paper_bath1.png" height=300;/> <img src="./../media/9_floating_toilet_paper_bath2.jpeg" height=300;/>
 
 And this is in my bathroom with some of them already placed!
 
