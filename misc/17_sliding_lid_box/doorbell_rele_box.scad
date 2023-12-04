@@ -15,7 +15,7 @@ fn = 80;
 module elec_box_base(dimensions, wall_w, r_round)
 {
     // hole for power cable
-    power_cable_center = [23, 48];
+    power_cable_center = [23.2, 48.5];
     cable_diam = 11;
 
     // Wall support
