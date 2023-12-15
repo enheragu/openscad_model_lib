@@ -142,7 +142,7 @@ else if (export == "AS")
     elec_box_base(elechtronics_size, wall_width, rounding);
 
     color("Indigo")
-    translate(v = [elechtronics_size[0], -elechtronics_size[1]/2 - 10 , 0]) 
+    translate(v = [elechtronics_size[0], - 10 , 0]) 
     rotate([0,0,180])
     elec_box_lid(elechtronics_size, wall_width, rounding);
 }

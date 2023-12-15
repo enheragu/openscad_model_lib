@@ -249,7 +249,7 @@ else if (export == "A")
     color("darkgrey") motor_base();
 
 
-    color("Olive", 0.4) original_piece();
+    // color("Olive", 0.4) original_piece();
 }
 else
 {
