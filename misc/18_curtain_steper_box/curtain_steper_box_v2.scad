@@ -1,3 +1,9 @@
+/**
+ * Last Update: 2024/12/16
+ * Current version: v2.1
+ **/
+
+
 include <./deps/gears.scad>
 
 Gear_type = "None";
@@ -106,41 +112,44 @@ module curtain_gear()
             translate(v = [0,0,-epsilon]) 
             cylinder(h = axis_length, d = axis_diam, $fn = fn);
         }
+        // translate(v = [0,0,base_h]) 
+        // cylinder(h = wall_width/2, d = gear_curtain_diam*1.055);
         translate(v = [0,0,base_h-gear_width]) 
         stirnrad (modul=Module, zahnzahl=teeth_step_motor*amplification, breite=gear_width, bohrung=axis_diam, 
                     nabendurchmesser=0, nabendicke=0, 
                     eingriffswinkel=pressure_angle, schraegungswinkel=finalHelixAngle, 
                     optimiert=optimized);
     }
+
     
 }
 
 module motor_gear()
 {
     base_h = 2.6;
-    motor_fix_diam = 5 + tolerance*2;
+    motor_fix_diam = 5 + tolerance;
     motor_fix_heigth = 30 + epsilon;
-    motor_fix_side = 3 + tolerance*2;
+    motor_fix_side = 3 + tolerance;
 
     translate([0,0,wall_width+ball_gear[0]-base_h])
     translate(v = [0,0,base_h-gear_width]) 
     rotate([0,0,6])
     union()
     {
-        stirnrad (modul=Module, zahnzahl=teeth_step_motor, breite=gear_width, bohrung=motor_fix_diam+wall_width, 
+        stirnrad (modul=Module, zahnzahl=teeth_step_motor, breite=gear_width-tolerance*2, bohrung=motor_fix_diam+wall_width, 
                 nabendurchmesser=0, nabendicke=0, 
                 eingriffswinkel=pressure_angle, schraegungswinkel=-finalHelixAngle, 
                 optimiert=optimized);
 
         difference()
         {
-            cylinder(h = gear_width, d = motor_fix_diam + wall_width + epsilon*2);
+            cylinder(h = gear_width-tolerance*2, d = motor_fix_diam + wall_width + epsilon*2);
             translate(v = [0,0,-epsilon]) 
             intersection()
             {
-                cylinder(h = gear_width + epsilon*2, d = motor_fix_diam, $fn = fn);
-                translate([0,0,(gear_width + epsilon*2)/2])
-                cube(size = [motor_fix_diam, motor_fix_side, gear_width + epsilon*2], center = true);
+                cylinder(h = gear_width-tolerance*2 + epsilon*2, d = motor_fix_diam, $fn = fn);
+                translate([0,0,(gear_width-tolerance*2 + epsilon*2)/2])
+                cube(size = [motor_fix_diam, motor_fix_side, gear_width-tolerance*2 + epsilon*2], center = true);
             }
         }
     }
@@ -149,50 +158,97 @@ module motor_gear()
 module motor_lid()
 {
     lid_h = 3 - tolerance; // extra espace for gear
-    motor_gear_base_h = 2.6 + tolerance + epsilon;
-    motor_gear_base_diam = gear_motor_diam + wall_width + tolerance*2;
-
     motor_hole = 9 + tolerance*2;
 
     translate(v = [0,0,wall_width+ball_gear[0]-lid_h-gear_width - tolerance]) 
-    difference()
+    union() 
     {
-        union()
+        difference()
         {
-            // translate(v = [0,-support_side/2,0])
-            // cube(size = [heigth_with_gear-support_side/2, support_side, lid_h]);
             cylinder(h = lid_h, d = support_side, $fn = fn);
+
+            translate(v = [0,0,-epsilon]) 
+            cylinder(h = lid_h + epsilon*2, d = motor_hole, $fn = fn);
+            
+            // Lid screw holes
+            rotate([0,0,90])
+            union()
+            {
+                translate(v = [12.5 - (motor_hole-tolerance*2)/2,31/2 + M_3/2, -epsilon]) 
+                union() 
+                {
+                    cylinder(h = lid_h + epsilon*2, d = M_3, $fn = fn);
+                    translate(v = [0,0,lid_h/2]) 
+                    cylinder(h = lid_h + epsilon*2, d = M_3_head, $fn = fn);
+                }
+
+                translate(v = [12.5 - (motor_hole-tolerance*2)/2, -31/2 - M_3/2, -epsilon]) 
+                union() 
+                {
+                    cylinder(h = lid_h + epsilon*2, d = M_3, $fn = fn);
+                    translate(v = [0,0,lid_h/2]) 
+                    cylinder(h = lid_h + epsilon*2, d = M_3_head, $fn = fn);
+                }
+            }
+            translate(v = [gear_center_distance,0,-epsilon]) 
+            cylinder(h = lid_h + epsilon*2, d = axis_diam + wall_width*2 + tolerance*2, $fn = fn);
+
         }
 
-        // translate(v = [0,0,lid_h-motor_gear_base_h-epsilon]) 
-        // cylinder(h = motor_gear_base_h + tolerance, d = motor_gear_base_diam, $fn = fn);
+        // Extra hood for the gear motor to avoid it getting loose from the motor
+        // external_diam = gear_motor_diam + wall_width*2.5 + tolerance*15;
+        // external_heigth = gear_width + lid_h*2 + tolerance*2;
+        // translate(v = [0,0,lid_h]) 
+        // difference() 
+        // {
+        //     intersection() 
+        //     {
+        //         cylinder(h = external_heigth, d = external_diam);
+        //         union()
+        //         {
+        //             cylinder(h = external_heigth, d = gear_motor_diam);
+        //             translate(v = [-external_diam,-gear_motor_diam/2,]) 
+        //             cube(size = [external_diam,gear_motor_diam, external_heigth]);
 
-        translate(v = [0,0,-epsilon]) 
-        cylinder(h = lid_h + epsilon*2, d = motor_hole, $fn = fn);
+        //         }
+        //     }
+        //     // Place for the gear to rotate
+        //     translate(v = [0,0,-epsilon]) 
+        //     cylinder(h = gear_width + tolerance*3, d = external_diam - wall_width*2.5 - tolerance);
+        // }
 
+        // Fix gear in place with a nail
+        // external_heigth = gear_width + lid_h*2 + tolerance*2;
+        // piece_width = wall_width*2;
+        // translate(v = [-(wall_width*2 + axis_diam)/2,support_side/2-wall_width*3.3,0]) 
+        // difference() 
+        // {
+        //     union() 
+        //     {
+        //     cube([wall_width*2 + axis_diam, piece_width, external_heigth]);
+        //     translate(v = [(wall_width*2 + axis_diam)/2,piece_width,external_heigth]) 
+        //     rotate([90,0,0])
+        //     cylinder(h = piece_width, d = wall_width*2 + axis_diam, $fn = fn);
+        //     }
+        //     translate(v = [(wall_width*2 + axis_diam)/2,piece_width + epsilon,external_heigth]) 
+        //     rotate([90,0,0])
+        //     cylinder(h = piece_width + epsilon*2, d = axis_diam + tolerance, $fn = fn);
+        // }
         
-        // Lid screw holes
-        rotate([0,0,90])
-        union()
-        {
-            translate(v = [12.5 - (motor_hole-tolerance*2)/2,31/2 + M_3/2, -epsilon]) 
-            union() 
-            {
-                cylinder(h = lid_h + epsilon*2, d = M_3, $fn = fn);
-                translate(v = [0,0,lid_h/2]) 
-                cylinder(h = lid_h + epsilon*2, d = M_3_head, $fn = fn);
-            }
-
-            translate(v = [12.5 - (motor_hole-tolerance*2)/2, -31/2 - M_3/2, -epsilon]) 
-            union() 
-            {
-                cylinder(h = lid_h + epsilon*2, d = M_3, $fn = fn);
-                translate(v = [0,0,lid_h/2]) 
-                cylinder(h = lid_h + epsilon*2, d = M_3_head, $fn = fn);
-            }
-        }
-        translate(v = [gear_center_distance,0,-epsilon]) 
-        cylinder(h = lid_h + epsilon*2, d = axis_diam + wall_width*2 + tolerance*2, $fn = fn);
+        // translate(v = [-(wall_width*2 + axis_diam)/2,-(support_side/2-wall_width*3.3)-piece_width,0]) 
+        // difference() 
+        // {
+        //     union() 
+        //     {
+        //     cube([wall_width*2 + axis_diam, piece_width, external_heigth]);
+        //     translate(v = [(wall_width*2 + axis_diam)/2,piece_width,external_heigth]) 
+        //     rotate([90,0,0])
+        //     cylinder(h = piece_width, d = wall_width*2 + axis_diam, $fn = fn);
+        //     }
+        //     translate(v = [(wall_width*2 + axis_diam)/2,piece_width + epsilon,external_heigth]) 
+        //     rotate([90,0,0])
+        //     cylinder(h = piece_width + epsilon*2, d = axis_diam + tolerance, $fn = fn);
+        // }
     }
 }
 
@@ -207,7 +263,7 @@ module motor_base ()
     //distance between motor axis and motor center
     motor_axis_to_center = 12.5;
 
-    motor_fix_diam = 7;
+    motor_fix_diam = 7 + tolerance;
     motor_fix_h = 1.5;
 
     extra_h_piece = wall_width+ball_gear[0]-lid_h-base_h;
