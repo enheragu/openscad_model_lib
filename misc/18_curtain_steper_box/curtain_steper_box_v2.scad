@@ -254,7 +254,7 @@ module motor_lid()
 
 module motor_base ()
 {
-    external_motor_diam = 28 + tolerance*2;
+    external_motor_diam = 28.2 + tolerance*2;
     motor_hole = 9 + tolerance*2;
     motor_height = 19.3;
     base_h = motor_height + wall_width;
@@ -263,8 +263,8 @@ module motor_base ()
     //distance between motor axis and motor center
     motor_axis_to_center = 12.5;
 
-    motor_fix_diam = 7 + tolerance;
-    motor_fix_h = 1.5;
+    motor_fix_diam = 7 + tolerance*2;
+    motor_fix_h = 1.5 + tolerance;
 
     extra_h_piece = wall_width+ball_gear[0]-lid_h-base_h;
 
