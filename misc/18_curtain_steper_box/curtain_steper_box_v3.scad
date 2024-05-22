@@ -1,6 +1,6 @@
 /**
- * Last Update: 2023/12/16
- * Current version: v2.1
+ * Last Update: 2024/05/13
+ * Current version: v3.1
  **/
 
 
@@ -57,6 +57,22 @@ gear_center_distance = (gear_motor_diam + gear_curtain_diam)/2;
 M_3 = 3;
 M_3_head = 5;
 
+M_4 = 4;
+M_4_head = 6;
+
+/* [Bracket settings] */
+
+// Lenght of the bracket (symetric and 90 degrees bracket) (mm)
+b_length = 41;
+
+// Width of the bracket (mm)
+b_width = 18.65;
+
+// Wall width of the bracket (mm)
+b_wall_width = 1.75;
+
+// Screws positions. 2 screws with x and y position
+b_screw_position = [[13,11], [32.5,7.2]];
 
 /* [Other] */
 
@@ -252,6 +268,50 @@ module motor_lid()
     }
 }
 
+module metallic_bracket(tolerance = 0)
+{
+    color("gold")
+    translate(v = [b_wall_width+tolerance*2,0,0]) 
+    rotate([0,0,180])
+    for (i = [0,1])
+    {   
+        translate(v = [i*(b_wall_width+tolerance*2),0,0]) 
+        rotate([0,i*-90,0])
+        difference() 
+        {
+            cube(size = [b_length+tolerance*2, b_width+tolerance*2, b_wall_width+tolerance*2]);
+            
+            
+            for (punto = b_screw_position) {
+                translate(v = [punto[0],punto[1],-epsilon]) 
+                cylinder(d = M_4+tolerance, h = b_wall_width+tolerance*2+epsilon*2, $fn = fn);
+            }
+        }
+    }
+}
+
+module metallic_bracket_negative(tolerance = 0, screw_length = 0, external_heigth = 0)
+{
+    color("gold")
+    translate(v = [b_wall_width+tolerance*2,0,0]) 
+    rotate([0,0,180])
+    for (i = [0,1])
+    {   
+        translate(v = [i*(b_wall_width+tolerance*2+external_heigth),0,0]) 
+        rotate([0,i*-90,0])
+        {
+            cube(size = [b_length+tolerance*2, b_width+tolerance*2, b_wall_width+tolerance*2+external_heigth]);
+            
+            
+            for (punto = b_screw_position) {
+                translate(v = [punto[0],punto[1],-epsilon-screw_length]) 
+                cylinder(d = M_4+tolerance, h = b_wall_width+tolerance*2+epsilon*2+screw_length, $fn = fn);
+            }
+        }
+    }
+}
+
+
 module motor_base ()
 {
     external_motor_diam = 28.2 + tolerance*2;
@@ -321,32 +381,21 @@ module motor_base ()
                     cube(size = [heigth_with_gear, hole_side, motor_height+epsilon]);
                 }
             }
-
-            tongue_y = support_side/2 - fix_tongue_middle_separation/2 - fix_tongue_edge_margin;
-
-            translate_x = heigth_with_gear-support_side/2 - fix_tongue_edge_margin - wall_width + tolerance/2;
-            translate_y_t1 = fix_tongue_middle_separation/2 + tolerance/2;
-            translate_y_t2 = tongue_y + fix_tongue_middle_separation/2 - tolerance/2;
-            // Bigger tongues for better sujection
-            tongue_length = fix_tongue_length*1.5;
-            translate(v = [translate_x, translate_y_t1, 0]) 
-            cube(size = [wall_width-tolerance, tongue_y-tolerance, tongue_length]);
-            translate(v = [translate_x, -translate_y_t2, 0]) 
-            cube(size = [wall_width-tolerance, tongue_y-tolerance, tongue_length]);
-
-            translate(v = [heigth_with_gear-support_side/2 + tolerance, -space/2, 0]) 
-            cube(size = [wall_width, space, tongue_length]);
-
-            // makes sure of the final aligment
-            extra_space = heigth_with_gear-support_side/2 + wall_width + tolerance - translate_x;
-            translate(v = [translate_x,-support_side/2,-wall_width]) 
-            cube(size = [extra_space, support_side, wall_width*2]);
-
             // Extra support for curtain gear axis!
             translate(v = [gear_center_distance,0,translate_z]) 
             cylinder(h = base_h+lid_h-tolerance, d = axis_diam + wall_width*2, $fn = fn);
         }
     
+        tongue_y = support_side/2 - fix_tongue_middle_separation/2 - fix_tongue_edge_margin;
+        translate_x = heigth_with_gear-support_side/2 - fix_tongue_edge_margin - wall_width + tolerance/2;
+        translate_y_t1 = fix_tongue_middle_separation/2 + tolerance/2;
+        
+        translate(v = [translate_x, -translate_y_t1-(tongue_y-b_width-tolerance), 0]) 
+        metallic_bracket_negative(tolerance/2, base_h/2, 10);
+
+        translate(v = [heigth_with_gear-support_side/2 + tolerance, b_width, 0]) 
+        metallic_bracket_negative(tolerance/2, base_h/2, 10);
+
         // Hueco tornillo lenguas
         // 19.5 + M_3/2 // largo desde el extremo!!
         // 14.08 + M_3/2 // ancho desde el ladito
@@ -358,11 +407,14 @@ module motor_base ()
         // Extra hole piece for curtain gear axis!
         translate(v = [gear_center_distance,0,-epsilon+translate_z]) 
         cylinder(h = fix_tongue_length, d = axis_diam + tolerance, $fn = fn);
-    }
+        }
+
+    
 
 }
 
-          
+
+
 if (export == "L")
 {
     motor_lid();
@@ -390,6 +442,15 @@ else if (export == "A")
     color("lightgrey") motor_gear();
 
     color("darkgrey") motor_base();
+
+
+    tongue_y = support_side/2 - fix_tongue_middle_separation/2 - fix_tongue_edge_margin;
+    translate_x = heigth_with_gear-support_side/2 - fix_tongue_edge_margin - wall_width + tolerance/2;
+    translate_y_t1 = fix_tongue_middle_separation/2 + tolerance/2;
+    translate(v = [translate_x, -translate_y_t1-(tongue_y-b_width), 0]) 
+    metallic_bracket();
+    translate(v = [heigth_with_gear-support_side/2 + tolerance, b_width, 0])     
+    metallic_bracket();
 
     // translate(v = [0,0,-22]) 
     // cylinder(h = 50, d = 2.4);

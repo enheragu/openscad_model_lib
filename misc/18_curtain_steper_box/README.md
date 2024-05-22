@@ -2,11 +2,12 @@
 
 First idea taken from [this post](https://www.instructables.com/Motorized-WiFi-IKEA-Roller-Blind/). I had to redesign the pieces as my curtain is a bit different.
 
-First verion (`curtain_steper_box.scad`) had the motor in line with the curtain axis. When tested this motor proved to have not enough torque to move it, so I had to make second version (`curtain_steper_box_v2.scad`), which includes gears to cope with that issue.
+First verion (`curtain_steper_box.scad`) had the motor in line with the curtain axis. When tested this motor proved to have not enough torque to move it, so I had to make second version (`curtain_steper_box_v2.scad`), which includes gears to cope with that issue. The v2 worked well, but while changing the motor to a 12v version some of the plastic tongues broke. Third version (`curtain_steper_box_v3.scad`) substituted them by some metallic brackets (golden colour in the image).
 
-In the following images the original piece, the first version and the second version of the model can be seen:
+In the following images the original piece, the first, second and final version of the model can be seen:
 
-<img src="./../media/18_curtain_stepper_box_original.png" width=30%;/> <img src="./../media/18_curtains_steper_box_v1.png" width=30%;/> <img src="./../media/18_curtain_steper_box_v2.png" width=30%;/>
+<img src="./../media/18_curtain_stepper_box_original.png" width=24.5%;/> <img src="./../media/18_curtains_steper_box_v1.png" width=24.5%;/> <img src="./../media/18_curtain_steper_box_v2.png" width=24.5%;/> <img src="./../media/18_curtain_steper_box_v3.png" width=24.5%;/>
+
 
 In my case is integrated with Home Assistant to handle the automation.
 
@@ -20,6 +21,7 @@ For this project I used:
 - Voltaje conversor to have both 12v in stepper motor and 3v in board.
 - Screw to fix it to the curtain (based on my curtain...).
 - Curtain :)
+- Two metallic brackets with 2 screws each.
 
 ### Printed parts
 
