@@ -27,6 +27,12 @@ in_height = 125;
 // Axis diameter to fix the helix
 axis_diam = 2.4;
 
+// Height of the dispensation cone (mm)
+cone_height = 60;
+
+// Upper diam of dispensation cone (mm)
+cone_diam = 80;
+
 /* [Screw settings] */
         
 M_3 = 3;
@@ -42,7 +48,7 @@ tolerance_deg = 1; // 0.1
 
 /* [Other] */
 
-export = "A"; //[L:Lid, H:Helix, M:Motor base,A:Assembly, N:None]
+export = "A"; //[L:Lid, H:Helix, M:Motor base,A:Assembly, C:Dispensation Cone, S: Dispensation Slide, N:None]
 
 // $fn resolution
 fn = 180;
@@ -218,6 +224,161 @@ module cat_feeder_motor_lid()
 }
 
 
+module empty_cylinder(h, d_ext, d_int, wall_width = 0)
+{
+   difference() 
+    {
+        cylinder(h = h, d = d_ext, $fn=fn);
+        translate(v = [0,0,-epsilon+wall_width]) 
+        cylinder(h = h+epsilon*2, d = d_int, $fn=fn);
+    } 
+}
+
+module chamfered_cone(h, d1, d2)
+{
+    internal_diam = insertion_diameter-tolerance-wall_width*2;
+    difference() 
+    {
+        cylinder(h = h, d1 = d1, d2 = d2, $fn = fn);
+        translate(v = [d1+(d2-d1)*0.6,0,d2/2]) 
+        cube([d2,d2,d2], center=true);
+        
+
+        d1_inside = d1-wall_width*2.5-tolerance*2;
+        d2_inside = d2-wall_width*2.5-tolerance*2;
+        translate(v = [0,0,-epsilon]) 
+        difference() 
+        {
+            cylinder(h = h+epsilon*2, d1 = internal_diam, d2 = d2_inside, $fn = fn);
+            translate(v = [d1_inside+(d2_inside-d1_inside)*0.6,0,d2_inside/2]) 
+            cube([d2_inside,d2_inside,d2_inside], center=true);
+        }
+    }
+}
+
+module elbow(innerDiam, outerDiam, bendRadius, angle = 45)
+{
+    translate(v = [0,bendRadius,0]) 
+    rotate([90,0,-90])
+    intersection()
+    {
+        rotate_extrude(angle = angle, $fn = fn)
+        translate([bendRadius, 0, 0]) 
+        difference() 
+        {
+            circle(d = outerDiam, $fn = fn);
+            circle(d = innerDiam, $fn = fn);
+        }
+        translate([0, 0, -outerDiam/2]) 
+        cube([bendRadius + outerDiam/2, bendRadius + outerDiam/2, outerDiam]);
+    }
+}
+
+
+module cat_feeder_dispensation_cone()
+{
+    external_diam = ext_diameter+wall_width*2+tolerance*3;
+    external_insertion_height = wall_width*8;
+    internal_diam = insertion_diameter-tolerance-wall_width*2;
+    
+    difference() 
+    {
+        union() 
+        {
+            translate(v = [0,internal_diam-wall_width*2,-insertion-internal_diam/2+epsilon]) 
+            rotate([45,0,0])
+            union()
+            {
+                translate(v = [0,0,insertion-external_insertion_height]) 
+                empty_cylinder(external_insertion_height, d_ext=external_diam, d_int=ext_diameter);
+
+                translate(v = [0,0,insertion]) 
+                empty_cylinder(wall_width, d_ext=external_diam, d_int=internal_diam);
+
+                translate(v = [0,0,insertion+wall_width]) 
+                elbow(internal_diam, external_diam, bendRadius = internal_diam, angle = 45);
+            }
+            chamfered_cone(h = cone_height, d1 = external_diam, d2 = cone_diam); 
+        }
+
+        
+        // Wall support
+        wall_attach_dim = [7, 7];
+        wall_small_diam = 4;
+        extra = 2;
+        hole_width = wall_width*4 + epsilon*4;
+        translate(v = [external_diam/2-wall_width,0,cone_height*0.8-max(wall_attach_dim)]) 
+        union()
+        {
+            translate([(hole_width)/2, 0, (wall_small_diam + wall_attach_dim[1] + extra)/2])
+            cube([hole_width, wall_small_diam, wall_small_diam + wall_attach_dim[1] + extra], center = true);
+        
+            translate([(hole_width)/2, 0, (wall_attach_dim[1])/2])
+            cube([hole_width, wall_attach_dim[0], wall_attach_dim[1]], center = true);
+        }
+    }
+     
+
+}
+
+module cat_feeder_dispensation_ramp()
+{
+    internal_diam = insertion_diameter-tolerance-wall_width*2;
+    internal_diam_wall = internal_diam-tolerance-wall_width*2;
+    empty_cylinder(h=insertion, d_ext=insertion_diameter-tolerance, d_int=in_diameter-tolerance);
+
+
+    translate(v = [0,0,wall_width]) 
+    rotate([0,180,0])
+    difference() 
+    {
+        cylinder(h=wall_width, d1=insertion_diameter-tolerance, d2=in_diameter-tolerance, $fn = fn);
+        translate([0,0,-epsilon])
+        cylinder(h=wall_width+epsilon*2, d1=insertion_diameter-tolerance-wall_width*2, d2=in_diameter-tolerance-tolerance-wall_width*2, $fn = fn);
+
+        translate(v = [-insertion_diameter/2,0,0]) 
+        cube([insertion_diameter,insertion_diameter,insertion_diameter]);
+    }
+
+    difference() 
+    {
+        union()
+        {
+            difference() 
+            {
+            
+                translate([0,0,-insertion])
+                empty_cylinder(h=insertion, d_ext=in_diameter-tolerance, d_int=in_diameter-wall_width*2-tolerance);
+
+                translate([0,0,-insertion*1.5])
+                rotate([45,0,0])
+                empty_cylinder(h=insertion*2, d_ext=in_diameter-tolerance*2, d_int=0);
+            }
+            intersection()
+            {
+                translate([0,0,-insertion])
+                empty_cylinder(h=insertion, d_ext=in_diameter-tolerance, d_int=0);
+
+                translate([0,0,-insertion*1.5])
+                rotate([45,0,0])
+                empty_cylinder(h=insertion*2, d_ext=in_diameter-tolerance*2, d_int=in_diameter-wall_width*2-tolerance*2);
+            }
+        }
+        
+        translate([0,0,-insertion-epsilon])
+        translate(v = [-in_diameter/2,0,0]) 
+        cube([in_diameter,in_diameter,in_diameter]);
+    }
+
+    
+    
+    
+    // angle = 40;
+    // translate(v = [0,internal_diam*cos(3.1415/180*angle),-internal_diam*cos(3.1415/180*angle)])
+    // rotate([angle,0,0])
+    // cube([internal_diam*2,internal_diam*2,internal_diam*2],center=true);
+}
+
 separation = 30;
 if (export == "L")
 {   
@@ -230,6 +391,14 @@ else if (export == "H")
 else if (export == "M")
 {   
     cat_feeder_motor_lid();
+}
+else if (export == "C")
+{   
+    cat_feeder_dispensation_cone();
+}
+else if (export == "S")
+{   
+    cat_feeder_dispensation_ramp();
 }
 else if (export == "A")
 {    
@@ -244,6 +413,17 @@ else if (export == "A")
     color("#0038A8")
     translate(v = [0,0,-separation]) 
     cat_feeder_motor_lid();
+
+
+    color("#9DC209")
+    translate([0,in_diameter,separation*2.5])
+    rotate([-45,0,0])
+    cat_feeder_dispensation_ramp();
+
+    color("#11C39C", alpha=1)
+    translate([0,in_diameter*2.5,separation*3.8])
+    rotate([-90,0,0])
+    cat_feeder_dispensation_cone();
 }
 else
 {
