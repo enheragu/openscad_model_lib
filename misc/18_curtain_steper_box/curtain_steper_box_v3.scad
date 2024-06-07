@@ -131,10 +131,14 @@ module curtain_gear()
         // translate(v = [0,0,base_h]) 
         // cylinder(h = wall_width/2, d = gear_curtain_diam*1.055);
         translate(v = [0,0,base_h-gear_width]) 
-        stirnrad (modul=Module, zahnzahl=teeth_step_motor*amplification, breite=gear_width, bohrung=axis_diam, 
-                    nabendurchmesser=0, nabendicke=0, 
-                    eingriffswinkel=pressure_angle, schraegungswinkel=finalHelixAngle, 
-                    optimiert=optimized);
+        pfeilrad (modul=Module, zahnzahl=teeth_step_motor*amplification, breite=gear_width, bohrung=axis_diam, 
+                  nabendicke=0, nabendurchmesser=0, 
+                  eingriffswinkel=pressure_angle, schraegungswinkel=finalHelixAngle, 
+                  optimiert=optimized);
+        // stirnrad (modul=Module, zahnzahl=teeth_step_motor*amplification, breite=gear_width, bohrung=axis_diam, 
+        //             nabendurchmesser=0, nabendicke=0, 
+        //             eingriffswinkel=pressure_angle, schraegungswinkel=finalHelixAngle, 
+        //             optimiert=optimized);
     }
 
     
@@ -152,10 +156,14 @@ module motor_gear()
     rotate([0,0,6])
     union()
     {
-        stirnrad (modul=Module, zahnzahl=teeth_step_motor, breite=gear_width-tolerance*2, bohrung=motor_fix_diam+wall_width, 
-                nabendurchmesser=0, nabendicke=0, 
-                eingriffswinkel=pressure_angle, schraegungswinkel=-finalHelixAngle, 
-                optimiert=optimized);
+        // stirnrad (modul=Module, zahnzahl=teeth_step_motor, breite=gear_width-tolerance*2, bohrung=motor_fix_diam+wall_width, 
+        //         nabendurchmesser=0, nabendicke=0, 
+        //         eingriffswinkel=pressure_angle, schraegungswinkel=-finalHelixAngle, 
+        //         optimiert=optimized);
+        pfeilrad (modul=Module, zahnzahl=teeth_step_motor, breite=gear_width, bohrung=motor_fix_diam+wall_width, 
+                  nabendicke=0, nabendurchmesser=0, 
+                  eingriffswinkel=pressure_angle, schraegungswinkel=-finalHelixAngle, 
+                  optimiert=optimized);
 
         difference()
         {
