@@ -242,10 +242,9 @@ module chamfered_cone(h, d1, d2)
         cylinder(h = h, d1 = d1, d2 = d2, $fn = fn);
         translate(v = [d1+(d2-d1)*0.6,0,d2/2]) 
         cube([d2,d2,d2], center=true);
-        
 
-        d1_inside = d1-wall_width*2.5-tolerance*2;
-        d2_inside = d2-wall_width*2.5-tolerance*2;
+        d1_inside = d1-wall_width*1.5-tolerance*2;
+        d2_inside = d2-wall_width*1.5-tolerance*2;
         translate(v = [0,0,-epsilon]) 
         difference() 
         {
