@@ -25,7 +25,7 @@ module elec_box_base(dimensions, wall_w, r_round)
 
     // DHT11 hole
     dht22_position = [23, 10];
-    dht22_slot = [8, 16];
+    dht22_slot = [8.5, 16.5];
 
     hole_width = wall_w + epsilon*4;
     difference() 
