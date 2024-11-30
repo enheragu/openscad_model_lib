@@ -215,28 +215,30 @@ module countertop(door_frame_size, plug_board_size, shelf_frame, wood_width)
 ///////////////////////////////
 
 // Animation :)
-$vpt = [35, 15, 35];
-$vpr = [60, 0, 360 * $t];
-$vpd = 480;
+// $vpt = [35, 15, 35];
+// $vpr = [60, 0, 360 * $t];
+// $vpd = 480;
 
+separate_pieces = 30;
 union()
 {
     // Just for visualization   
     translate(v = [margin_between_trolleys,margin_between_trolleys,0]) 
     trolley_set();
 
-
-
     door_frame_size = [trolley_1[0]+margin_between_trolleys,
                     wood_width*2+min_space_between_doors*3,
                     trolley_1[2]+wheel_height];
+    translate([0,-separate_pieces,0])
+    // color("white", 0.6)    
     doors(door_frame_size, wood_width);
 
 
 
     trolley_depth = 2*trolley_1[1]+trolley_2[1]+margin_between_trolleys*4;
     plug_board_size = [plug_side+margin_between_trolleys*2,wood_width,door_frame_size[2]-wood_width*2];
-    translate(v = [-plug_board_size[0],-door_frame_size[1],0]) 
+    translate(v = [-separate_pieces-plug_board_size[0],-door_frame_size[1],0]) 
+    // color("white", 0.6)
     plugs_structure(plug_board_size = plug_board_size,
                     door_frame_size = door_frame_size, 
                     trolley_depth = trolley_depth,
@@ -247,19 +249,23 @@ union()
     shelf_frame = [shelf_widht,
                 wood_width+trolley_depth+door_frame_size[1],
                 door_frame_size[2]];
-    translate(v = [-shelf_frame[0]-plug_board_size[0],-door_frame_size[1],0]) 
+    translate(v = [-separate_pieces*2-shelf_frame[0]-plug_board_size[0],-door_frame_size[1],0]) 
+    // color("white", 0.6)
     shelf_module(shelf_frame = shelf_frame,
                 door_frame_size = door_frame_size,
                 trolley_depth = trolley_depth,
                 wood_width = wood_width);
 
+    translate([0,separate_pieces,0])
+    // color("white", 0.6)
     countertop_back_support(door_frame_size = door_frame_size, 
                             trolley_depth = trolley_depth, 
                             wood_width = wood_width);
 
 
     // countertop
-    translate(v = [-shelf_frame[0]-plug_board_size[0],-door_frame_size[1],door_frame_size[2]]) 
+    translate(v = [-shelf_frame[0]-plug_board_size[0],-door_frame_size[1],door_frame_size[2]+separate_pieces]) 
+    // color("white", 0.6)
     countertop(door_frame_size = door_frame_size, 
                 plug_board_size = plug_board_size, 
                 shelf_frame = shelf_frame, 
