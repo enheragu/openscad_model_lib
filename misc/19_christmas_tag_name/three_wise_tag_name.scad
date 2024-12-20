@@ -68,7 +68,7 @@ module tag(name, min_ww, wall_width)
     {
         color("gold")
         linear_extrude(height = gold_height) 
-        import("./crown.svg", center = false, dpi = 96, $fn = 100);
+        import("./svg/crown.svg", center = false, dpi = 96, $fn = 100);
     }
 }
 

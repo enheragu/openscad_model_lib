@@ -9,7 +9,7 @@ wall_width = 1;
 string = "Mamá";
 
 // Depending on the text you input, the witdh can change a lot. Change this value to adjust the tag length a bit
-width_compensation = 0; // [-40:0.1:40]
+width_compensation = 0; // [-70:0.1:70]
 
 // Depending on the string introduced text might change a bit. Compensate this to final adjust centering of the text
 height_compensation = 0; // [-10:0.1:10]
@@ -67,10 +67,10 @@ module tag(name, min_ww, wall_width)
     {
         color("red")
         linear_extrude(height = red_height) 
-        import("./christmas_hat_external.svg", center = false, dpi = 96, $fn = 100);
+        import("./svg/christmas_hat_external.svg", center = false, dpi = 96, $fn = 100);
         color("white")
         linear_extrude(height = white_top_height) 
-        import("./christmas_hat_white.svg", center = false, dpi = 96, $fn = fn);
+        import("./svg/christmas_hat_white.svg", center = false, dpi = 96, $fn = fn);
     }
 }
 
