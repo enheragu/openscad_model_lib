@@ -12,7 +12,7 @@ extruder_width = 0.4;
 svg_path = "./svg/molino_kwon_o.svg";
 
 stamp_diameter = 59;
-stamp_height = 2.5;
+stamp_height = 4;
 
 handle_diameter = 16.66;
 handle_height = 16;
@@ -35,8 +35,8 @@ module stamp()
         difference()
         {
             cylinder(h = stamp_height, d = stamp_diameter, center = true, $fn = fn);
-            translate([-stamp_diameter/2+wall_width/2, -stamp_diameter/2+wall_width/2, stamp_height-wall_width])
-            linear_extrude(height=wall_width, center=true)
+            translate([-stamp_diameter/2+wall_width/2, -stamp_diameter/2+wall_width/2, stamp_height/4+epsilon])
+            linear_extrude(height=stamp_height/2, center=true)
             resize([stamp_diameter-wall_width, stamp_diameter-wall_width])
                 import(svg_path);
 
