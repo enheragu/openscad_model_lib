@@ -169,7 +169,8 @@ module extension()
     }
 }
 
-extension();
+// extension();
+intermediate_lid();
 /*union()
 {
     color("grey")

@@ -421,10 +421,10 @@ module support_chamfer(basic_top_side_width, basic_top_side_depth, basic_top_z,
 
 
 // default to customize
-// box_with_top(width = width, depth = depth,
-//              top_overture_depth = top_overture_depth, top_overture_width = top_overture_width,
-//              vertical_chambers = vertical_chambers,
-//              add_label = add_label, label_text = label_text);
+box_with_top(width = width, depth = depth,
+             top_overture_depth = top_overture_depth, top_overture_width = top_overture_width,
+             vertical_chambers = vertical_chambers,
+             add_label = add_label, label_text = label_text);
 
 
 // box_with_top(width = [1,0], depth = [3,0],
@@ -440,10 +440,10 @@ module support_chamfer(basic_top_side_width, basic_top_side_depth, basic_top_z,
 //              add_label = false);
 
 // translate([-300,0,0])
-box_with_top(width = [2,0], depth = [6,0],
-             top_overture_depth = 1.25, top_overture_width = 2,
-             vertical_chambers = 3,
-             add_label = true, label_text = "M-M;M-F;F-F");
+// box_with_top(width = [2,0], depth = [6,0],
+//              top_overture_depth = 1.25, top_overture_width = 2,
+//              vertical_chambers = 3,
+//              add_label = true, label_text = "M-M;M-F;F-F");
 
 // translate([-450,0,0])
 // box_with_top(width = width, depth = depth,
@@ -451,3 +451,5 @@ box_with_top(width = [2,0], depth = [6,0],
 //              vertical_chambers = vertical_chambers,
 //              add_label = add_label, label_text = label_text);
 
+
+// default_cup(width = [2,0], depth = [1,0], vertical_chambers = 0);
